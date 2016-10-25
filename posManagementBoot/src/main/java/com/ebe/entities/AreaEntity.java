@@ -8,12 +8,23 @@ import javax.persistence.*;
 @Entity
 @Table(name = "area")
 public class AreaEntity {
-    private Long areaId;
-    private String areaName;
-    private long regionId;
-
     @Id
-    @Column(name = "AreaID", nullable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "area_seq")
+    @SequenceGenerator(name = "area_seq", sequenceName = "area_area_id_seq", allocationSize = 1)
+    private Long areaId;
+    @Basic(optional = false)
+    private String areaName;
+    @Basic(optional = false)
+    private Integer regionId;
+
+    public AreaEntity() {
+    }
+
+    public AreaEntity(String areaName, Integer regionId) {
+        this.areaName = areaName;
+        this.regionId = regionId;
+    }
+
     public Long getAreaId() {
         return areaId;
     }
@@ -22,8 +33,7 @@ public class AreaEntity {
         this.areaId = areaId;
     }
 
-    @Basic
-    @Column(name = "AreaName", nullable = false, length = 50)
+
     public String getAreaName() {
         return areaName;
     }
@@ -32,13 +42,12 @@ public class AreaEntity {
         this.areaName = areaName;
     }
 
-    @Basic
-    @Column(name = "RegionID", nullable = false)
-    public long getRegionId() {
+
+    public Integer getRegionId() {
         return regionId;
     }
 
-    public void setRegionId(long regionId) {
+    public void setRegionId(Integer regionId) {
         this.regionId = regionId;
     }
 

@@ -1,12 +1,12 @@
 package com.ebe.repositories;
 
-import com.ebe.entities.RegionEntity;
+import com.ebe.entities.ProjectEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Created by saado on 10/21/2016.
+ * Created by saado on 10/25/2016.
  */
 @Repository
-public interface RegionRepository extends JpaRepository<RegionEntity, Integer> {
+public interface ProjectRepository extends JpaRepository<ProjectEntity, Long> {
 }

@@ -67,6 +67,20 @@ CREATE SEQUENCE public.technician_technician_id_seq
     MINVALUE 1
     MAXVALUE 9223372036854775807
     CACHE 1;
+	
+CREATE SEQUENCE public.project_project_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+CREATE SEQUENCE public.area_area_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
 
 /********************* Addresses Information *********************/
 CREATE TABLE public.region

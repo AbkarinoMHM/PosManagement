@@ -6,13 +6,21 @@ import javax.persistence.*;
  * Created by saado on 10/17/2016.
  */
 @Entity
-@Table(name = "project", schema = "ebe", catalog = "")
+@Table(name = "project")
 public class ProjectEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_seq")
+    @SequenceGenerator(name = "project_seq", sequenceName = "project_project_id_seq", allocationSize = 1)
     private Long projectId;
+
+    public ProjectEntity(){}
+
+    public ProjectEntity(String projectName){
+        this.projectName = projectName;
+    }
+    @Basic(optional = false)
     private String projectName;
 
-    @Id
-    @Column(name = "ProjectID", nullable = false)
     public Long getProjectId() {
         return projectId;
     }
@@ -21,8 +29,6 @@ public class ProjectEntity {
         this.projectId = projectId;
     }
 
-    @Basic
-    @Column(name = "ProjectName", nullable = false, length = 50)
     public String getProjectName() {
         return projectName;
     }

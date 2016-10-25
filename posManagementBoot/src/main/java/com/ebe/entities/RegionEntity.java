@@ -8,28 +8,30 @@ import javax.persistence.*;
 @Entity
 @Table(name = "region")
 public class RegionEntity {
-    private Long regionId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "region_seq")
+    @SequenceGenerator(name="region_seq", sequenceName="region_region_id_seq", allocationSize=1)
+    private Integer regionId;
+
     private String regionName;
 
-    public RegionEntity(){}
+    public RegionEntity() {
+    }
 
-    public RegionEntity(String name){
+    public RegionEntity(String name) {
         this.setRegionName(name);
     }
 
-    @Id
-    @Column(name = "RegionID", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long getRegionId() {
+
+    public Integer getRegionId() {
         return regionId;
     }
 
-    public void setRegionId(Long regionId) {
+    public void setRegionId(Integer regionId) {
         this.regionId = regionId;
     }
 
-    @Basic
-    @Column(name = "RegionName", nullable = true, length = 50)
+
     public String getRegionName() {
         return regionName;
     }
@@ -53,11 +55,11 @@ public class RegionEntity {
 
     @Override
     public int hashCode() {
-          return this.regionId.hashCode();
+        return this.regionId.hashCode();
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Region ID: " + this.getRegionId() + ", Region Name: " + this.getRegionName();
     }
 }

@@ -40,8 +40,8 @@ public class RegoinRepositoryTest {
     public void testCreateRegion() throws Exception {
         RegionEntity regionEntity = new RegionEntity();
         regionEntity.setRegionName("Region1");
-        repository.save(regionEntity);
-        Long id = regionEntity.getRegionId();
+        repository.saveAndFlush(regionEntity);
+        Integer id = regionEntity.getRegionId();
         assertThat(id, is(notNullValue()));
 
         RegionEntity again = repository.findOne(id);
@@ -55,7 +55,7 @@ public class RegoinRepositoryTest {
         RegionEntity regionEntity = new RegionEntity();
         regionEntity.setRegionName("Region1");
         repository.save(regionEntity);
-        Long id = regionEntity.getRegionId();
+        Integer id = regionEntity.getRegionId();
         regionEntity.setRegionName("TestRegion");
         repository.save(regionEntity);
         RegionEntity again = repository.findOne(id);
