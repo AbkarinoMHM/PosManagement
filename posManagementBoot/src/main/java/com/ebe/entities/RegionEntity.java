@@ -8,9 +8,11 @@ import javax.persistence.*;
 @Entity
 @Table(name = "region")
 public class RegionEntity {
-    @Id
+
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "region_seq")
     @SequenceGenerator(name="region_seq", sequenceName="region_region_id_seq", allocationSize=1)
+    @Id
+    @Column(name="region_id")
     private Integer regionId;
 
     private String regionName;

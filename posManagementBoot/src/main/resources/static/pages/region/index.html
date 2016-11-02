@@ -1,0 +1,99 @@
+<html ng-app="crudApp">
+<head>
+    <title>AngularJS CRUD Operations Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Include Bootstrap CSS -->
+    <!--<link rel="stylesheet" href="css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css"/>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- Include main CSS -->
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <!-- Include jQuery library -->
+    <script src="../../js/jQuery/jquery-3.1.1.min.js"></script>
+    <!-- Include Bootstrap Javascript -->
+    <script src="../../js/bootstrap.min.js"></script>
+    <!-- Include AngularJS library -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- Include controller -->
+    <script src="../../js/regionController.js"></script>
+
+
+</head>
+<body ng-controller="regionController">
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Angular Routing Example</a>
+        </div>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+            <li><a href="#about"><i class="fa fa-shield"></i> About</a></li>
+            <li><a href="#contact"><i class="fa fa-comment"></i> Contact</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container wrapper" >
+<div class="container wrapper" >
+
+    <!--<nav class="navbar navbar-default">-->
+        <div class="navbar-header">
+            <div class="alert alert-default navbar-brand search-box">
+                <!--<button class="btn btn-primary" ng-show="show_form" ng-click="formToggle()">Add Region <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>-->
+                <button class="btn btn-primary" ng-show="show_form" ng-click="showAddForm($event)">Add Region <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+            </div>
+            <div class="alert alert-default input-group search-box">
+<span class="input-group-btn">
+<input type="text" class="form-control" placeholder="Search region details..." ng-model="search_query">
+</span>
+            </div>
+        </div>
+    <!--</nav>-->
+    <div class="col-md-6 col-md-offset-3">
+
+        <!-- Include form template which is used to insert data into database -->
+        <!--<div ng-include src="'templates/form.html'"></div>-->
+
+        <!-- Include form template which is used to edit and update data into database -->
+        <div ng-include src="'templates/editForm.html'"></div>
+    </div>
+    <div class="clearfix"></div>
+
+    <!-- Table to show employee detalis -->
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <tr>
+                <th>Region ID</th>
+                <th>Region Name</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr ng-repeat="detail in details| filter:search_query">
+                <td>
+                    <span>{{detail.regionId}}</span></td>
+                <td>{{detail.regionName}}</td>
+
+                <td>
+                    <button class="btn btn-warning" ng-click="editInfo(detail)" title="Edit"><span class="glyphicon glyphicon-edit"></span></button>
+                </td>
+                <td>
+                    <button class="btn btn-danger" ng-click="deleteInfo(detail)" title="Delete"><span class="glyphicon glyphicon-trash"></span></button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</div>
+
+
+
+</body>
+</html>

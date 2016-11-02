@@ -7,28 +7,34 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "posstatus")
-public class PosstatusEntity {
-    private Integer statusId;
-    private String statusName;
-
+public class PosStatusEntity {
     @Id
-    @Column(name = "StatusID", nullable = false)
-    public Integer getStatusId() {
-        return statusId;
+    private Integer posStatusId;
+    @Basic(optional = false)
+    private String posStatusName;
+
+    public PosStatusEntity() {
     }
 
-    public void setStatusId(Integer statusId) {
-        this.statusId = statusId;
+    public PosStatusEntity(Integer posStatusId, String posStatusName) {
+        this.posStatusId = posStatusId;
+        this.posStatusName = posStatusName;
     }
 
-    @Basic
-    @Column(name = "StatusName", nullable = true, length = 100)
-    public String getStatusName() {
-        return statusName;
+    public Integer getPosStatusId() {
+        return posStatusId;
     }
 
-    public void setStatusName(String statusName) {
-        this.statusName = statusName;
+    public void setPosStatusId(Integer posStatusId) {
+        this.posStatusId = posStatusId;
+    }
+
+    public String getPosStatusName() {
+        return posStatusName;
+    }
+
+    public void setPosStatusName(String posStatusName) {
+        this.posStatusName = posStatusName;
     }
 
     @Override
@@ -36,9 +42,9 @@ public class PosstatusEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PosstatusEntity that = (PosstatusEntity) o;
+        PosStatusEntity that = (PosStatusEntity) o;
 
-        if (statusId != that.statusId) return false;
+        if (posStatusId != that.posStatusId) return false;
 
         return true;
     }
@@ -46,6 +52,6 @@ public class PosstatusEntity {
     @Override
     public int hashCode() {
 
-        return this.statusId.hashCode();
+        return this.posStatusId.hashCode();
     }
 }

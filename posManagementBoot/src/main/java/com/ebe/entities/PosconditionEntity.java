@@ -7,28 +7,34 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "poscondition")
-public class PosconditionEntity {
-    private Integer conditionId;
-    private String conditionName;
-
+public class PosConditionEntity {
     @Id
-    @Column(name = "ConditionID", nullable = false)
-    public int getConditionId() {
-        return conditionId;
+    private Integer posConditionId;
+    @Basic(optional = false)
+    private String posConditionName;
+
+    public PosConditionEntity(){}
+
+    public PosConditionEntity(Integer posConditionId, String posConditionName){
+        this.posConditionId = posConditionId;
+        this.posConditionName = posConditionName;
     }
 
-    public void setConditionId(int conditionId) {
-        this.conditionId = conditionId;
+
+    public Integer getPosConditionId() {
+        return posConditionId;
     }
 
-    @Basic
-    @Column(name = "ConditionName", nullable = true, length = 50)
-    public String getConditionName() {
-        return conditionName;
+    public void setPosConditionId(Integer posConditionId) {
+        this.posConditionId = posConditionId;
     }
 
-    public void setConditionName(String conditionName) {
-        this.conditionName = conditionName;
+    public String getPosConditionName() {
+        return posConditionName;
+    }
+
+    public void setPosConditionName(String posConditionName) {
+        this.posConditionName = posConditionName;
     }
 
     @Override
@@ -36,14 +42,14 @@ public class PosconditionEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PosconditionEntity that = (PosconditionEntity) o;
+        PosConditionEntity that = (PosConditionEntity) o;
 
-        if (conditionId != that.conditionId) return false;
+        if (posConditionId != that.posConditionId) return false;
         return true;
     }
 
     @Override
     public int hashCode() {
-        return this.conditionId.hashCode();
+        return this.posConditionId.hashCode();
     }
 }

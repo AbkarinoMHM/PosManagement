@@ -13,13 +13,13 @@ public class ProjectEntity {
     @SequenceGenerator(name = "project_seq", sequenceName = "project_project_id_seq", allocationSize = 1)
     private Long projectId;
 
+    @Basic(optional = false)
+    private String projectName;
     public ProjectEntity(){}
 
     public ProjectEntity(String projectName){
         this.projectName = projectName;
     }
-    @Basic(optional = false)
-    private String projectName;
 
     public Long getProjectId() {
         return projectId;

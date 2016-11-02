@@ -27,12 +27,12 @@ public class ProjectRepositoryTest {
     private ProjectRepository repository;
 
     @Test
-    public void testGetProjectss() throws Exception {
+    public void testGetProjects() throws Exception {
         for (int i = 0; i < 3; i++) {
             repository.save(new ProjectEntity("Project" + i));
         }
-        List<ProjectEntity> regions = repository.findAll();
-        assertThat(regions.size(), is(3));
+        List<ProjectEntity> projects = repository.findAll();
+        assertThat(projects.size(), is(3));
     }
 
     @Test

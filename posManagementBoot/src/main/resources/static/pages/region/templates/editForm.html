@@ -1,0 +1,23 @@
+<!-- Form used for updation of data into database -->
+<form class="form-horizontal alert alert-warning" id="editForm" ng-submit="UpdateInfo(currentRegion)" hidden>
+    <h3 class="text-center">Update Region Details</h3>
+    <div class="form-group">
+    <label for="Id">Region ID:</label>
+    <input id="Id" type="text" class="form-control" ng-model="currentRegion.regionId" value="{{currentRegion.regionId}}" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="Name">Region Name:</label>
+        <input Id="Name" type="text" class="form-control" ng-model="currentRegion.regionName"
+               value="{{currentRegion.regionName}}">
+    </div>
+    <div class="form-group">
+        <button class="btn btn-warning" ng-disabled="regionList.$invalid" ng-click="updateMsg(currentRegion.regionID)">
+            Update
+        </button>
+        <button class="btn btn-warning" type="button" ng-click="updateMsg(currentRegion.regionID)">Cancel</button>
+    </div>
+</form>
+
+
+

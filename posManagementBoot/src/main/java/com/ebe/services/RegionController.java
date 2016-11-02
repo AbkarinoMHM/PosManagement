@@ -17,7 +17,7 @@ import java.util.List;
  * Created by saado on 10/24/2016.
  */
 @RestController
-@RequestMapping("/region")
+@RequestMapping("/services/region")
 @Transactional
 public class RegionController {
     @Autowired

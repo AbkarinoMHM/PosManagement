@@ -14,15 +14,18 @@ public class AreaEntity {
     private Long areaId;
     @Basic(optional = false)
     private String areaName;
-    @Basic(optional = false)
-    private Integer regionId;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name="region_id",referencedColumnName="region_id")
+    private RegionEntity region;
+
 
     public AreaEntity() {
     }
 
-    public AreaEntity(String areaName, Integer regionId) {
+    public AreaEntity(String areaName, RegionEntity region) {
         this.areaName = areaName;
-        this.regionId = regionId;
+        this.region = region;
     }
 
     public Long getAreaId() {
@@ -42,13 +45,12 @@ public class AreaEntity {
         this.areaName = areaName;
     }
 
-
-    public Integer getRegionId() {
-        return regionId;
+    public RegionEntity getRegion() {
+        return region;
     }
 
-    public void setRegionId(Integer regionId) {
-        this.regionId = regionId;
+    public void setRegion(RegionEntity region) {
+        this.region = region;
     }
 
     @Override
