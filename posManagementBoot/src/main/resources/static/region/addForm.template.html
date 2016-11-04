@@ -1,12 +1,9 @@
 <md-dialog aria-label="Add Region">
-    <form ng-cloak>
+    <form name="addRegionForm" ng-cloak>
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <h2>Add Region</h2>
                 <span flex></span>
-                <!--<md-button class="md-icon-button" ng-click="cancel()">-->
-                    <!--<md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>-->
-                <!--</md-button>-->
             </div>
         </md-toolbar>
 
@@ -14,17 +11,22 @@
             <div class="md-dialog-content">
                 <md-input-container class="md-block" flex-gt-sm>
                     <label>Region Name</label>
-                    <input ng-model="regionInfo.regionName">
-                </md-input-container>
+                    <input type="text" name="regionName" ng-model="regionInfo.regionName" required>
+                    <div ng-messages="addRegionForm.regionName.$error">
+                        <div ng-message="required">
+                            Region name is required!
+                        </div>
+                    </div>
+            </md-input-container>
             </div>
         </md-dialog-content>
 
         <md-dialog-actions layout="row">
-            <md-button ng-click="insertRegion(regionInfo)">
+            <md-button type="submit" ng-click="insertRegion(regionInfo)">
                 Add
             </md-button>
             <md-button ng-click="cancel()">
-               Cancel
+                Cancel
             </md-button>
         </md-dialog-actions>
     </form>

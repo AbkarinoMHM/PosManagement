@@ -1,0 +1,46 @@
+<div class="container wrapper">
+  <div class="container wrapper">
+
+
+    <div class="navbar-header">
+      <div class="alert alert-default navbar-brand search-box">
+        <!--<button class="btn btn-primary" ng-show="show_form" ng-click="formToggle()">Add Region <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>-->
+        <button class="btn btn-primary" ng-show="show_form" ng-click="showAddForm($event)">Add Region <span
+                class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+      </div>
+      <div class="alert alert-default input-group search-box">
+<span class="input-group-btn">
+<input type="text" class="form-control" placeholder="Search region details..." ng-model="search_query">
+</span>
+      </div>
+    </div>
+    <!--</nav>-->
+    <div class="clearfix"></div>
+
+    <!-- Table to show regions details -->
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <tr>
+          <th>Region ID</th>
+          <th>Region Name</th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr ng-repeat="detail in details| filter:search_query">
+          <td>
+            <span>{{detail.regionId}}</span></td>
+          <td>{{detail.regionName}}</td>
+
+          <td>
+            <button class="btn btn-warning" ng-click="showEditForm(detail)" title="Edit"><span
+                    class="glyphicon glyphicon-edit"></span></button>
+          </td>
+          <td>
+            <button class="btn btn-danger" ng-click="deleteInfo(detail)" title="Delete"><span
+                    class="glyphicon glyphicon-trash"></span></button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
