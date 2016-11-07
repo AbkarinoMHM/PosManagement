@@ -16,15 +16,22 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-animate.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-aria.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
     <script src="https://code.angularjs.org/1.5.8/angular-sanitize.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <!-- Include main CSS -->
     <link rel="stylesheet" type="text/css" href="app.css">
     <!-- Include modules and components -->
+    <!--main app module-->
     <script src="app.module.js"></script>
+    <script src="app.config.js"></script>
+    <!--region module-->
     <script src="region/region.module.js"></script>
     <script src="region/region.component.js"></script>
+    <!--project module-->
+    <script src="project/project.module.js"></script>
+    <script src="project/project.component.js"></script>
 
 
 
@@ -33,19 +40,21 @@
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/">Angular Routing Example</a>
+            <a class="navbar-brand" href="#!/">Angular Routing Example</a>
         </div>
 
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
-            <li><a href="#about"><i class="fa fa-shield"></i> About</a></li>
-            <li><a href="#contact"><i class="fa fa-comment"></i> Contact</a></li>
+
+            <li><a href="#!/"><i class="fa fa-home"></i> Home</a></li>
+            <li><a href="#!/regions"><i class="fa fa-shield"></i> Regions</a></li>
+            <li><a href="#!/projects"><i class="fa fa-comment"></i> Projects</a></li>
         </ul>
     </div>
 </nav>
 
 <!-- Use a custom component -->
-<region-list></region-list>
+<!--<region-list></region-list>-->
+<div ng-view></div>
 
 </body>
 </html>

@@ -1,48 +1,48 @@
 'use strict';
 
 // Register `phoneList` component, along with its associated controller and template
-angular.module('region').component('regionsList', {
-    templateUrl: 'region/region.template.html',
-    controller: function regionController($scope, $http, $mdDialog) {
+angular.module('project').component('projectsList', {
+    templateUrl: 'project/project.template.html',
+    controller: function projectController($scope, $http, $mdDialog) {
 
-        // Function to get regions from the database
+        // Function to get projects from the database
         function getInfo() {
-            // Sending request to region get service
-            $http.get('services/region').success(function (data) {
+            // Sending request to project get service
+            $http.get('services/project').success(function (data) {
                 // Stored the returned data into scope
                 $scope.details = data;
             });
         }
 
-        //get regions
+        //get projects
         getInfo();
 
-        // Enabling show_form variable to enable Add region button
+        // Enabling show_form variable to enable Add  button
         $scope.show_form = true;
 
         //Show add form
         $scope.showAddForm = function (event) {
-            $scope.regionInfo = {};
+            $scope.info = {};
             $mdDialog.show({
                 clickOutsideToClose: true,
                 scope: $scope,
                 preserveScope: true,
-                templateUrl: 'region/addForm.template.html',
+                templateUrl: 'project/addForm.template.html',
                 parent: angular.element(document.body),
                 targetEvent: event,
-                controller: regionController
+                controller: projectController
             });
         };
 
         //Show edit form
-        $scope.currentRegion = {};
+        $scope.currentRecord = {};
         $scope.showEditForm = function ($info) {
-            $scope.currentRegion = $info;
+            $scope.currentRecord = $info;
             $mdDialog.show({
                 clickOutsideToClose: true,
                 scope: $scope,
                 preserveScope: true,
-                templateUrl: 'region/editForm.template.html',
+                templateUrl: 'project/editForm.template.html',
                 parent: angular.element(document.body),
                 targetEvent: $info,
                 controller: function () {
@@ -57,12 +57,12 @@ angular.module('region').component('regionsList', {
             var confirm = $mdDialog.confirm()
                 .title('Are you sure to delete this record?')
                 .textContent('Record will be deleted permanently.')
-                .ariaLabel('Delete Region')
+                .ariaLabel('Delete Project')
                 .targetEvent(event)
                 .ok('Yes')
                 .cancel('No');
             $mdDialog.show(confirm).then(function () {
-                $http.delete('services/region/' + info.regionId).success(function (data) {
+                $http.delete('services/project/' + info.projectId).success(function (data) {
                     getInfo();
                 });
             }, function () {
@@ -78,11 +78,11 @@ angular.module('region').component('regionsList', {
             $mdDialog.cancel();
         };
 
-        //Add region button pressed
-        $scope.insertRegion = function (region) {
-            if (region.regionName) {
-                $http.post('services/region', {
-                    "regionName": region.regionName
+        //Add  button pressed
+        $scope.insertRecord = function (record) {
+            if (record.projectName) {
+                $http.post('services/project', {
+                    "projectName": record.projectName
                 }).then(function (data) {
                     getInfo();
                 },function (response) {
@@ -108,10 +108,10 @@ angular.module('region').component('regionsList', {
             }
         };
 
-        //Update region button pressed
-        $scope.updateRegion = function (region) {
-            $http.put('services/region/' + region.regionId, {
-                "regionName": region.regionName
+        //Update button pressed
+        $scope.updateRecord = function (record) {
+            $http.put('services/project/' + record.projectId, {
+                "projectName": record.projectName
             }).success(function (data) {
                 getInfo();
             });

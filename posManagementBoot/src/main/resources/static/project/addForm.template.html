@@ -1,0 +1,33 @@
+<md-dialog aria-label="Add Region">
+    <form name="addRegionForm" ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Add Project</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Project Name</label>
+                    <input type="text" name="name" ng-model="info.projectName" required>
+                    <div ng-messages="addRegionForm.name.$error">
+                        <div ng-message="required">
+                            Project name is required!
+                        </div>
+                    </div>
+            </md-input-container>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button type="submit" ng-click="insertRecord(info)">
+                Add
+            </md-button>
+            <md-button ng-click="cancel()">
+                Cancel
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

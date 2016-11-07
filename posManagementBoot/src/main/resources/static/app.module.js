@@ -3,5 +3,5 @@
 // Define the `posApp` module
 angular.module('posApp', [
   // ...which depends on the `regionList` module
- 'ngMaterial','region'
+ 'ngMaterial','ngMessages','ngSanitize','ngRoute','region','project'
 ]);

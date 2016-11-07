@@ -15,7 +15,7 @@ import java.util.List;
  * Created by saado on 10/24/2016.
  */
 @RestController
-@RequestMapping("/project")
+@RequestMapping("services/project")
 @Transactional
 public class ProjectController {
     @Autowired
