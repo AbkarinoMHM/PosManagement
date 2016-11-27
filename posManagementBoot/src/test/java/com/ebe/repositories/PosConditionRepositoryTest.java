@@ -14,6 +14,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by saado on 10/27/2016.
@@ -31,7 +32,7 @@ public class PosConditionRepositoryTest {
             repository.save(new PosConditionEntity(i, "Pos Condition" + i));
         }
         List<PosConditionEntity> posConditions = repository.findAll();
-        assertThat(posConditions.size(), is(3));
+        assertTrue(posConditions.size() >= 3);
     }
 
     @Test

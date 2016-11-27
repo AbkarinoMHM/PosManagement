@@ -1,60 +1,156 @@
 <!doctype html>
 <html ng-app="posApp">
 <head>
-    <title>AngularJS CRUD Operations Demo</title>
+    <title>POS Management</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--Jquery-->
-    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <!-- Include Bootstrap-->
+    <!--app icon-->
+    <link rel="icon" href="images/icons/1478792080_seo-social-web-network-internet_204.png" type="image/png"/>
+    <link rel="shortcut icon" href="images/icons/1478792080_seo-social-web-network-internet_204.png" type="image/png"/>
+    <!--bootstrap-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css"/>
-    <!-- Include AngularJS library -->
+    <!--fontawesome-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <!--angularjs-->
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-animate.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-aria.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-messages.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
-    <script src="https://code.angularjs.org/1.5.8/angular-sanitize.min.js"></script>
+    <!--ui grid-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/3.2.9/ui-grid.min.css">
+    <!--googleFonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <!-- Include main CSS -->
-    <link rel="stylesheet" type="text/css" href="app.css">
-    <!-- Include modules and components -->
-    <!--main app module-->
-    <script src="app.module.js"></script>
-    <script src="app.config.js"></script>
-    <!--region module-->
-    <script src="region/region.module.js"></script>
-    <script src="region/region.component.js"></script>
-    <!--project module-->
-    <script src="project/project.module.js"></script>
-    <script src="project/project.component.js"></script>
-
+    <!--toastr-->
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <!-- main CSS -->
+    <link rel="stylesheet" type="text/css" href="css/app.css">
+    <link rel="stylesheet" type="text/css" href="css/ui-grid.css">
+    <link rel="stylesheet" href="css/material.css">
 
 
 </head>
 <body>
-<nav class="navbar navbar-default">
+<nav ng-cloak class="ng-cloak navbar navbar-default" ng-controller="mainController" ng-show="globals.currentUser">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#!/">Angular Routing Example</a>
+            <a class="navbar-brand" href="#!/">
+                <i class="fa fa-puzzle-piece" aria-hidden="true"></i> {{globals.customerName}} </a>
         </div>
 
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav navbar-left">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="false"><i class="fa fa-briefcase" aria-hidden="true"></i> Products <span
+                        class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#!"><i class="fa fa-credit-card" aria-hidden="true"></i> Point Of Sale</a></li>
+                    <li><a href="#!"><i class="fa fa-microchip" aria-hidden="true"></i> Sim Cards</a></li>
+                    <li><a href="#!"><i class="fa fa-circle-o" aria-hidden="true"></i> Rolls</a></li>
+                    <li><a href="#!"><i class="fa fa-desktop" aria-hidden="true"></i> Items</a></li>
+                    <li><a href="#!"><i class="fa fa-retweet" aria-hidden="true"></i> Spare Parts</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="false"><i class="fa fa-database" aria-hidden="true"></i> Master Data <span
+                        class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#!/projects"><i class="fa fa-product-hunt" aria-hidden="true"></i> Projects</a></li>
+                    <li><a href="#!/regions"><i class="fa fa-location-arrow" aria-hidden="true"></i> Regions</a></li>
+                    <li><a href="#!/areas"><i class="fa fa-map-marker" aria-hidden="true"></i> Areas</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="false"><i class="fa fa-university " aria-hidden="true"></i> Locations <span
+                        class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#!"><i class="fa fa-building" aria-hidden="true"></i> {{globals.customerName}} Branches</a>
+                    </li>
+                    <li><a href="#!"><i class="fa fa-hospital-o" aria-hidden="true"></i> {{globals.vendorName}} Branches</a>
+                    </li>
+                    <li><a href="#!"><i class="fa fa-wrench" aria-hidden="true"></i> Service Centers</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="false"><i class="fa fa-lock" aria-hidden="true"></i> Administration <span
+                        class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#!/users"><i class="fa fa-users" aria-hidden="true"></i> Users</a></li>
+                    <li><a href="#!/"><i class="fa fa-male" aria-hidden="true"></i> Technicians</a></li>
+                    <li><a href="#!/"><i class="fa fa-unlock-alt" aria-hidden="true"></i> Roles and Privileges</a></li>
+                </ul>
+            </li>
 
-            <li><a href="#!/"><i class="fa fa-home"></i> Home</a></li>
-            <li><a href="#!/regions"><i class="fa fa-shield"></i> Regions</a></li>
-            <li><a href="#!/projects"><i class="fa fa-comment"></i> Projects</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i> Omar Saad <span
+                        class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#!/projects"><i class="fa fa-cogs" aria-hidden="true"></i> Account Settings</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a ng-click="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Log out</a></li>
+                    <!--<li role="separator" class="divider"></li>-->
+                    <!--<li><a href="#">Separated link</a></li>-->
+                    <!--<li role="separator" class="divider"></li>-->
+                    <!--<li><a href="#">One more separated link</a></li>-->
+                </ul>
+            </li>
+
         </ul>
     </div>
 </nav>
 
-<!-- Use a custom component -->
-<!--<region-list></region-list>-->
-<div ng-view></div>
 
+<!--Main view-->
+
+    <div ng-view class="mainWrap"></div>
+
+<!--<div id="footer">-->
+    <!--<div class="container">-->
+        <!--<p class="muted credit">This is a sticky footer</p>-->
+    <!--</div>-->
+<!--</div>-->
+
+<!--Includes-->
+<!--Jquery-->
+<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- Bootstrap-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- Include AngularJS library -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-animate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-aria.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-messages.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-cookies.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+<script src="https://code.angularjs.org/1.5.8/angular-sanitize.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/3.2.9/ui-grid.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.2.0/ui-bootstrap-tpls.min.js"></script>
+<!--toastr-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<!-- Include modules and components -->
+<!--main app module-->
+<script src="js/app/app.module.js"></script>
+<script src="js/app/app.config.js"></script>
+<script src="js/app/app.login.service.js"></script>
+<script src="js/app/app.common.service.js"></script>
+<!--login module-->
+<script src="js/login/login.module.js"></script>
+<script src="js/login/login.component.js"></script>
+<!--log in module-->
+<script src="js/login/login.module.js"></script>
+<script src="js/login/login.component.js"></script>
+<!--region module-->
+<script src="js/region/region.module.js"></script>
+<script src="js/region/region.component.js"></script>
+<!--project module-->
+<script src="js/project/project.module.js"></script>
+<script src="js/project/project.component.js"></script>
+<!--user module-->
+<script src="js/user/user.module.js"></script>
+<script src="js/user/user.component.js"></script>
 </body>
 </html>

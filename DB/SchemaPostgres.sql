@@ -1,4 +1,4 @@
-CREATE SEQUENCE public.operator_operator_id_seq
+CREATE SEQUENCE public.user_user_id_seq
     INCREMENT 1
     START 1
     MINVALUE 1
@@ -75,12 +75,18 @@ CREATE SEQUENCE public.project_project_id_seq
     MAXVALUE 9223372036854775807
     CACHE 1;
 
-CREATE SEQUENCE public.area_area_id_seq
-    INCREMENT 1
-    START 1
-    MINVALUE 1
-    MAXVALUE 9223372036854775807
-    CACHE 1;
+/********************* settings *********************/
+CREATE TABLE public.setting
+(
+    setting_name character varying NOT NULL,
+    setting_value character varying NOT NULL,
+    CONSTRAINT setting_pkey PRIMARY KEY (setting_name)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
 
 /********************* Addresses Information *********************/
 CREATE TABLE public.region
@@ -242,16 +248,17 @@ WITH (
 TABLESPACE pg_default;
 
 
-CREATE TABLE public.operator
+CREATE TABLE public."user"
 (
-    operator_id integer NOT NULL DEFAULT nextval('operator_operator_id_seq'::regclass),
-    operator_name character varying(100) ,
-    operator_user_name character varying(50) ,
-    operator_password character varying(50) ,
-    operator_address character varying(100) ,
-    operator_mobile character varying(50) ,
-    operator_tel character varying(50) ,
-    CONSTRAINT operator_pkey PRIMARY KEY (operator_id)
+    user_id integer NOT NULL DEFAULT nextval('user_user_id_seq'::regclass),
+    user_full_name character varying(100) NOT NULL,
+    user_email character varying(50) NOT NULL,
+    user_password character varying(50) NOT NULL,
+    user_address character varying(100) ,
+    user_mobile character varying(50) ,
+    user_is_customer boolean NOT NULL DEFAULT '0',
+    CONSTRAINT user_pkey PRIMARY KEY (user_id),
+    CONSTRAINT user_email_unique UNIQUE (user_email)
 )
 WITH (
     OIDS = FALSE
@@ -259,17 +266,17 @@ WITH (
 TABLESPACE pg_default;
 
 
-CREATE TABLE public.operatorbranch
+CREATE TABLE public.userbranch
 (
-    operator_id bigint NOT NULL,
+    user_id bigint NOT NULL,
     ebe_branch_id bigint NOT NULL,
-    CONSTRAINT operatorbranch_pkey PRIMARY KEY (ebe_branch_id, operator_id),
-    CONSTRAINT operatorbranch_ebe_branch_id_fkey FOREIGN KEY (ebe_branch_id)
+    CONSTRAINT userbranch_pkey PRIMARY KEY (ebe_branch_id, user_id),
+    CONSTRAINT userbranch_ebe_branch_id_fkey FOREIGN KEY (ebe_branch_id)
         REFERENCES public.ebebranch (ebe_branch_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT operatorbranch_operator_id_fkey FOREIGN KEY (operator_id)
-        REFERENCES public.operator (operator_id) MATCH SIMPLE
+    CONSTRAINT userbranch_user_id_fkey FOREIGN KEY (user_id)
+        REFERENCES public.user (user_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
@@ -516,6 +523,39 @@ WITH (
     OIDS = FALSE
 )
 TABLESPACE pg_default;
+/****************************************************************/
+
+/************************Security ********************************/
+CREATE TABLE public.role
+(
+    role_id integer NOT NULL,
+    role_name character varying NOT NULL,
+    CONSTRAINT roles_pkey PRIMARY KEY (role_id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+CREATE TABLE public.user_role
+(
+    user_role_user_id integer NOT NULL,
+    user_role_role_id integer NOT NULL,
+    CONSTRAINT user_role_pkey PRIMARY KEY (user_role_role_id, user_role_user_id),
+    CONSTRAINT user_role_role_id FOREIGN KEY (user_role_role_id)
+        REFERENCES public.role (role_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT user_role_user_id_fkey FOREIGN KEY (user_role_user_id)
+        REFERENCES public."user" (user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+/****************************************************************/
 
 /*DROP TABLE IF EXISTS `pc`;
 CREATE TABLE `pc` (

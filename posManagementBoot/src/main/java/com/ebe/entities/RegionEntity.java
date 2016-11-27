@@ -12,7 +12,7 @@ public class RegionEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "region_seq")
     @SequenceGenerator(name="region_seq", sequenceName="region_region_id_seq", allocationSize=1)
     @Id
-    @Column(name="region_id")
+    //@Column(name="region_id")
     private Integer regionId;
     @Basic(optional = false)
     private String regionName;

@@ -1,0 +1,135 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway);
+
+html,
+body {
+    height: 100%;
+    /* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+.mainWrap {
+    /*min-height: 100%;*/
+    height: auto !important;
+    height: 100%;
+    /* Negative indent footer by it's height */
+    margin: 0 auto -60px;
+}
+
+/* Set the fixed height of the footer here */
+#push,
+#footer {
+    height: 60px;
+}
+
+#footer {
+    background-color: #eee;
+}
+
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+    #footer {
+        margin-left: -20px;
+        margin-right: -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+    display: none !important;
+}
+
+.wrapper {
+
+}
+
+.stretchedToMargin {
+    display: block;
+    position:absolute;
+    height:auto;
+    bottom:0;
+    top:0;
+    left:0;
+    right:0;
+    margin-top:20px;
+    margin-bottom:20px;
+    margin-right:80px;
+    margin-left:80px;
+}
+
+form#empForm, form#editForm {
+    padding: 0 35px 15px;
+}
+
+label.gender {
+    padding-top: 0 !important;
+}
+
+table tr th {
+    background: #f8f8f8;
+}
+
+.search-box {
+    padding-bottom: 0;
+}
+
+.Actions-button {
+    padding-top: 30px;
+    padding-left: 0px;
+}
+
+@media screen and (max-width: 368px) {
+    .wrapper {
+        min-width: 340px;
+    }
+}
+
+.form-signin-container {
+    height: 100% !important;
+    width: 100%;
+    position: fixed;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #eee;
+}
+
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+    margin-bottom: 10px;
+}
+
+.form-signin .checkbox {
+    font-weight: normal;
+}
+
+.form-signin .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+
+.form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}

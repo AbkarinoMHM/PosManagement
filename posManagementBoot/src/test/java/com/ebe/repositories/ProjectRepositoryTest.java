@@ -14,6 +14,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by saado on 10/21/2016.
@@ -32,7 +33,7 @@ public class ProjectRepositoryTest {
             repository.save(new ProjectEntity("Project" + i));
         }
         List<ProjectEntity> projects = repository.findAll();
-        assertThat(projects.size(), is(3));
+        assertTrue(projects.size() >=3);
     }
 
     @Test

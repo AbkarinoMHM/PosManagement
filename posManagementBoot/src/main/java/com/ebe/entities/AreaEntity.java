@@ -15,9 +15,9 @@ public class AreaEntity {
     @Basic(optional = false)
     private String areaName;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name="region_id",referencedColumnName="region_id")
-    private RegionEntity region;
+//    @ManyToOne(optional = false)
+//    @JoinColumn(name="region_id",referencedColumnName="region_id")
+//    private RegionEntity region;
 
 
     public AreaEntity() {
@@ -25,7 +25,7 @@ public class AreaEntity {
 
     public AreaEntity(String areaName, RegionEntity region) {
         this.areaName = areaName;
-        this.region = region;
+        //this.region = region;
     }
 
     public Long getAreaId() {
@@ -45,13 +45,13 @@ public class AreaEntity {
         this.areaName = areaName;
     }
 
-    public RegionEntity getRegion() {
-        return region;
-    }
-
-    public void setRegion(RegionEntity region) {
-        this.region = region;
-    }
+//    public RegionEntity getRegion() {
+//        return region;
+//    }
+//
+//    public void setRegion(RegionEntity region) {
+//        this.region = region;
+//    }
 
     @Override
     public boolean equals(Object o) {

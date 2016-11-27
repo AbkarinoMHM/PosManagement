@@ -1,0 +1,25 @@
+<div class="container wrapper">
+    <div class="navbar-header">
+
+        <div class="alert alert-default navbar-brand Actions-button">
+            <button class="btn btn-primary" ng-click="showGridBottomSheet()" title="Actions"><i class="fa fa-bars fa-lg"></i></button>
+        </div>
+
+        <div class="alert alert-default input-group search-box">
+<span class="input-group-btn">
+   <md-chips ng-model="searchTags" placeholder="Add a filter" secondary-placeholder="Add a filter"
+             md-on-add="filterAdded($chip)" md-on-remove="filterRemoved($chip)"
+             title="Filter Format: [fieldname][:|=|<|>|<=|>=][value]"></md-chips>
+</span>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div ui-grid="gridOptions" ui-grid-selection class="grid" ui-grid-auto-resize ng-style="getTableHeight()"
+         ui-grid-pagination ui-grid-pinning>
+    </div>
+
+
+</div>
+
