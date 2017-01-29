@@ -1,0 +1,60 @@
+<md-dialog aria-label="Edit Region">
+    <form name="editForm" ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Edit Area</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <md-input-container class="md-block" flex-gt-xs>
+                    <label>ID</label>
+                    <input id="id" ng-model="currentRecord.id" disabled>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Area Name</label>
+                    <input type="text" name="name" ng-model="currentRecord.name" required>
+                    <div ng-messages="editForm.name.$error">
+                        <div ng-message="required">
+                            Area name is required!
+                        </div>
+                    </div>
+                </md-input-container>
+                <md-autocomplete flex required
+                                 md-input-name="regionAutoComplete"
+                                 md-input-minlength="2"
+                                 md-input-maxlength="20"
+                                 md-no-cache="false"
+                                 md-selected-item="currentRecord.region"
+                                 md-search-text="ctrl.addAreaRegionSearchText"
+                                 md-items="item in getRegions(ctrl.addAreaRegionSearchText)"
+                                 md-item-text="item.name"
+                                 md-require-match
+                                 md-floating-label="Region *" >
+                    <md-item-template>
+                        <span md-highlight-text="addAreaRegionSearchText">{{item.name}}</span>
+                    </md-item-template>
+                    <div ng-messages="addForm.region.$error"
+                         ng-if="addForm.region.$touched">
+                        <div ng-message="required">Region is required!</div>
+                        <div ng-message="md-require-match">Please select an existing region.</div>
+                        <div ng-message="minlength">Your entry is not long enough.</div>
+                        <div ng-message="maxlength">Your entry is too long.</div>
+                    </div>
+                </md-autocomplete>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button ng-click="updateRecord(currentRecord)">
+                Update
+            </md-button>
+            <md-button ng-click="cancel()">
+                Cancel
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
+
+

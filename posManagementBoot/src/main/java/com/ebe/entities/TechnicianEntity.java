@@ -8,46 +8,55 @@ import javax.persistence.*;
 @Entity
 @Table(name = "technician")
 public class TechnicianEntity {
-    private Long technicianId;
-    private String technicianName;
-    private String jobTitle;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "technician_seq")
+    @SequenceGenerator(name = "technician_seq", sequenceName = "technician_technician_id_seq", allocationSize = 1)
+    @Column(name = "technician_id")
+    private Long id;
+    @Column(name = "technician_name", nullable = false)
+    private String name;
+    @Column(name = "technician_job_title")
+    private String title;
+    @Column(name = "technician_rate")
     private Integer rate;
+    @Column(name = "technician_mobile")
     private String mobile;
+    @Column(name = "technician_address")
     private String address;
+    @Column(name = "technician_tel")
     private String tel;
 
-    @Id
-    @Column(name = "TechnicianID", nullable = false)
-    public Long getTechnicianId() {
-        return technicianId;
+    public TechnicianEntity() {
     }
 
-    public void setTechnicianId(Long technicianId) {
-        this.technicianId = technicianId;
+    public TechnicianEntity(String name) {
+        this.name = name;
     }
 
-    @Basic
-    @Column(name = "technicianName", nullable = true, length = 100)
-    public String getTechnicianName() {
-        return technicianName;
+    public Long getId() {
+        return id;
     }
 
-    public void setTechnicianName(String technicianName) {
-        this.technicianName = technicianName;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    @Basic
-    @Column(name = "JobTitle", nullable = true, length = 50)
-    public String getJobTitle() {
-        return jobTitle;
+    public String getName() {
+        return name;
     }
 
-    public void setJobTitle(String jobTitle) {
-        this.jobTitle = jobTitle;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    @Basic
-    @Column(name = "Rate", nullable = true)
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public Integer getRate() {
         return rate;
     }
@@ -56,8 +65,6 @@ public class TechnicianEntity {
         this.rate = rate;
     }
 
-    @Basic
-    @Column(name = "Mobile", nullable = true, length = 50)
     public String getMobile() {
         return mobile;
     }
@@ -66,8 +73,6 @@ public class TechnicianEntity {
         this.mobile = mobile;
     }
 
-    @Basic
-    @Column(name = "Address", nullable = true, length = 255)
     public String getAddress() {
         return address;
     }
@@ -76,8 +81,6 @@ public class TechnicianEntity {
         this.address = address;
     }
 
-    @Basic
-    @Column(name = "Tel", nullable = true, length = 50)
     public String getTel() {
         return tel;
     }
@@ -93,12 +96,12 @@ public class TechnicianEntity {
 
         TechnicianEntity that = (TechnicianEntity) o;
 
-        if (technicianId != that.technicianId) return false;
-        return true;
+        return id.equals(that.id);
+
     }
 
     @Override
     public int hashCode() {
-        return this.technicianId.hashCode();
+        return id.hashCode();
     }
 }

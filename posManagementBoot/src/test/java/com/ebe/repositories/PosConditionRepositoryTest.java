@@ -35,27 +35,4 @@ public class PosConditionRepositoryTest {
         assertTrue(posConditions.size() >= 3);
     }
 
-    @Test
-    public void testCreatePosCondition() throws Exception {
-        PosConditionEntity posConditionEntity = new PosConditionEntity(1, "Pos Condition 1");
-        repository.saveAndFlush(posConditionEntity);
-        Integer id = posConditionEntity.getPosConditionId();
-        assertThat(id, is(notNullValue()));
-
-        PosConditionEntity again = repository.findOne(id);
-        assertThat(again.getPosConditionId(), is(id));
-        GeneralLogger.info(this.getClass(), again.toString());
-        assertThat(again.getPosConditionName(), is("Pos Condition 1"));
-    }
-
-    @Test
-    public void testUpdatePosCondition() throws Exception {
-        PosConditionEntity posConditionEntity = new PosConditionEntity(1, "Pos Condition 1");
-        repository.save(posConditionEntity);
-        Integer id = posConditionEntity.getPosConditionId();
-        posConditionEntity.setPosConditionName("Test Pos Condition");
-        repository.save(posConditionEntity);
-        PosConditionEntity again = repository.findOne(id);
-        assertThat(again.getPosConditionName(), is("Test Pos Condition"));
-    }
 }

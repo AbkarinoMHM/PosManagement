@@ -6,36 +6,48 @@ import javax.persistence.*;
  * Created by saado on 10/17/2016.
  */
 @Entity
-@Table(name = "servicecenter")
-public class ServicecenterEntity {
-    private Long serviceCenterId;
-    private String serviceCenterName;
-    private String address;
-    private String tel;
-    private Long areaId;
-
+@Table(name = "service_center")
+public class ServiceCenterEntity {
     @Id
-    @Column(name = "ServiceCenterID", nullable = false)
-    public Long getServiceCenterId() {
-        return serviceCenterId;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "service_center_seq")
+    @SequenceGenerator(name = "service_center_seq", sequenceName = "service_center_service_center_id_seq", allocationSize = 1)
+    @Column(name = "service_center_id", nullable = false)
+    private Long id;
+    @Column(name = "service_center_name", nullable = false, length = 50)
+    private String name;
+    @Column(name = "service_center_address", nullable = true, length = -1)
+    private String address;
+    @Column(name = "service_center_tel", nullable = true, length = -1)
+    private String tel;
+    @ManyToOne(optional = false)
+    @JoinColumn(name="area_id",referencedColumnName="area_id")
+    private AreaEntity area;
+
+
+    public ServiceCenterEntity() {
     }
 
-    public void setServiceCenterId(Long serviceCenterId) {
-        this.serviceCenterId = serviceCenterId;
+    public ServiceCenterEntity(String name, AreaEntity area) {
+        this.name = name;
+        this.area = area;
     }
 
-    @Basic
-    @Column(name = "ServiceCenterName", nullable = false, length = 50)
-    public String getServiceCenterName() {
-        return serviceCenterName;
+    public Long getId() {
+        return id;
     }
 
-    public void setServiceCenterName(String serviceCenterName) {
-        this.serviceCenterName = serviceCenterName;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    @Basic
-    @Column(name = "Address", nullable = true, length = -1)
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getAddress() {
         return address;
     }
@@ -44,8 +56,6 @@ public class ServicecenterEntity {
         this.address = address;
     }
 
-    @Basic
-    @Column(name = "Tel", nullable = true, length = 15)
     public String getTel() {
         return tel;
     }
@@ -54,14 +64,12 @@ public class ServicecenterEntity {
         this.tel = tel;
     }
 
-    @Basic
-    @Column(name = "AreaID", nullable = false)
-    public Long getAreaId() {
-        return areaId;
+    public AreaEntity getArea() {
+        return area;
     }
 
-    public void setAreaId(Long areaId) {
-        this.areaId = areaId;
+    public void setArea(AreaEntity area) {
+        this.area = area;
     }
 
     @Override
@@ -69,14 +77,14 @@ public class ServicecenterEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ServicecenterEntity that = (ServicecenterEntity) o;
+        ServiceCenterEntity that = (ServiceCenterEntity) o;
 
-        if (serviceCenterId != that.serviceCenterId) return false;
-        return true;
+        return id.equals(that.id);
+
     }
 
     @Override
     public int hashCode() {
-        return this.serviceCenterId.hashCode();
+        return id.hashCode();
     }
 }

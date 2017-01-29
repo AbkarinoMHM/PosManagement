@@ -11,30 +11,31 @@ public class ProjectEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_seq")
     @SequenceGenerator(name = "project_seq", sequenceName = "project_project_id_seq", allocationSize = 1)
-    private Long projectId;
+    @Column(name = "project_id")
+    private Long id;
 
-    @Basic(optional = false)
-    private String projectName;
+    @Column(name = "project_name", nullable = false)
+    private String name;
     public ProjectEntity(){}
 
-    public ProjectEntity(String projectName){
-        this.projectName = projectName;
+    public ProjectEntity(String name){
+        this.name = name;
     }
 
-    public Long getProjectId() {
-        return projectId;
+    public Long getId() {
+        return id;
     }
 
-    public void setProjectId(Long projectId) {
-        this.projectId = projectId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getProjectName() {
-        return projectName;
+    public String getName() {
+        return name;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -44,14 +45,14 @@ public class ProjectEntity {
 
         ProjectEntity that = (ProjectEntity) o;
 
-        if (projectId != that.projectId) return false;
-        if (projectName != null ? !projectName.equals(that.projectName) : that.projectName != null) return false;
+        if (id != that.id) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return this.projectId.hashCode();
+        return this.id.hashCode();
     }
 }

@@ -6,29 +6,38 @@ import javax.persistence.*;
  * Created by saado on 10/17/2016.
  */
 @Entity
-@Table(name = "postype")
-public class PostypeEntity {
-    private Integer typeId;
-    private String typeName;
-
+@Table(name = "pos_type")
+public class PosTypeEntity {
     @Id
-    @Column(name = "TypeID", nullable = false)
-    public Integer getTypeId() {
-        return typeId;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pos_type_seq")
+    @SequenceGenerator(name = "pos_type_seq", sequenceName = "pos_type_pos_type_id_seq", allocationSize = 1)
+    @Column(name = "pos_type_id", nullable = false)
+    private Integer id;
+    @Column(name = "pos_type_name", nullable = false)
+    private String name;
+
+    public PosTypeEntity() {
+
     }
 
-    public void setTypeId(Integer typeId) {
-        this.typeId = typeId;
+    public PosTypeEntity(String name) {
+        this.name = name;
     }
 
-    @Basic
-    @Column(name = "TypeName", nullable = true, length = 100)
-    public String getTypeName() {
-        return typeName;
+    public Integer getId() {
+        return id;
     }
 
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -36,14 +45,14 @@ public class PostypeEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PostypeEntity that = (PostypeEntity) o;
+        PosTypeEntity that = (PosTypeEntity) o;
 
-        if (typeId != that.typeId) return false;
-        return true;
+        return id.equals(that.id);
+
     }
 
     @Override
     public int hashCode() {
-        return this.typeId.hashCode();
+        return id.hashCode();
     }
 }

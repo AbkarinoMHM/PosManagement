@@ -2,7 +2,6 @@ package com.ebe.controllers;
 
 import com.ebe.SearchSpecifications.GenericSpecification;
 import com.ebe.SearchSpecifications.GenericSpecificationsBuilder;
-import com.ebe.entities.ProjectEntity;
 import com.ebe.entities.RegionEntity;
 import com.ebe.repositories.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,29 +29,38 @@ public class RegionController {
     private RegionRepository regionRepository;
 
     /**
-     * Get all regions
-     *
-     * @return All regions
+     * Find all regions
+     * @param name optional search by name
+     * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<RegionEntity>> findAll() {
-        List<RegionEntity> regions = this.regionRepository.findAll();
+    @RequestMapping(
+            method = RequestMethod.GET,
+            produces = {"application/json"}
+    )
+    public ResponseEntity<List<RegionEntity>> findAll(@RequestParam(value = "name", defaultValue = "") final String name) {
+        List<RegionEntity> regions;
+        if (name.isEmpty()) {
+            regions = this.regionRepository.findAll();
+        }else{
+            regions = this.regionRepository.findRegionByNameIgnoreCaseContaining(name);
+        }
         if (regions.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(regions, HttpStatus.OK);
         }
-        return new ResponseEntity<>(regions, HttpStatus.OK);
-
     }
 
     /**
      * Get all Regions by page
+     *
      * @param page Page number
      * @param size Number of buttonSheetItems per page
      * @return Regions page
      */
     @RequestMapping(
             value = "/get",
-            params = { "page", "size", "search"},
+            params = {"page", "size", "search"},
             method = RequestMethod.GET,
             produces = {"application/json"}
     )
@@ -62,10 +70,11 @@ public class RegionController {
         Pattern pattern = Pattern.compile(GenericSpecification.SpecificationsPattern);
         Matcher matcher = pattern.matcher(search + ",");
         while (matcher.find()) {
-            builder.with(matcher.group(1), matcher.group(2), matcher.group(5).trim());
+            builder.with(matcher.group(GenericSpecification.fieldNameIndex),
+                    matcher.group(GenericSpecification.operatorIndex), matcher.group(GenericSpecification.valueIndex).trim());
         }
         Specification<RegionEntity> spec = builder.build();
-        Page<RegionEntity> resultPage = this.regionRepository.findAll(spec, new PageRequest(page-1, size));
+        Page<RegionEntity> resultPage = this.regionRepository.findAll(spec, new PageRequest(page - 1, size));
         if (page > resultPage.getTotalPages()) {
             //return (Page<ProjectEntity>) new Exception("Not found");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -91,7 +100,8 @@ public class RegionController {
 
     /**
      * Create a new region
-     * @param region The region to be created
+     *
+     * @param region    The region to be created
      * @param ucBuilder
      * @return
      */
@@ -105,29 +115,31 @@ public class RegionController {
 
     /**
      * Update a region
-     * @param regionId The ID of the region to be updated
+     *
+     * @param regionId      The ID of the region to be updated
      * @param updatedRegion The new region name
      * @return The updated region
      */
     @RequestMapping(value = "/{regionid}", method = RequestMethod.PUT)
-    public ResponseEntity<RegionEntity> update(@PathVariable("regionid") Integer regionId, @RequestBody RegionEntity updatedRegion){
+    public ResponseEntity<RegionEntity> update(@PathVariable("regionid") Integer regionId, @RequestBody RegionEntity updatedRegion) {
         RegionEntity regionEntity = this.regionRepository.findOne(regionId);
-        if(regionEntity == null){
+        if (regionEntity == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        regionEntity.setRegionName(updatedRegion.getRegionName());
+        regionEntity.setName(updatedRegion.getName());
         this.regionRepository.saveAndFlush(regionEntity);
         return new ResponseEntity<>(regionEntity, HttpStatus.OK);
     }
 
     /**
      * Delete a region by region ID
+     *
      * @param regionId The ID of the region to be deleted
      * @return HTTP NO_CONTENT
      */
-    @RequestMapping(value="/{regionid}", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> deleteOne(@PathVariable("regionid") Integer regionId){
-        if(!this.regionRepository.exists(regionId)){
+    @RequestMapping(value = "/{regionid}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> deleteOne(@PathVariable("regionid") Integer regionId) {
+        if (!this.regionRepository.exists(regionId)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         this.regionRepository.delete(regionId);

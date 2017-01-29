@@ -6,35 +6,36 @@ import javax.persistence.*;
  * Created by saado on 10/17/2016.
  */
 @Entity
-@Table(name = "poscondition")
+@Table(name = "pos_condition")
 public class PosConditionEntity {
     @Id
-    private Integer posConditionId;
-    @Basic(optional = false)
-    private String posConditionName;
+    @Column(name="pos_condition_id", nullable = false)
+    private Integer id;
+    @Column(name="pos_condition_name", nullable = false)
+    private String name;
 
-    public PosConditionEntity(){}
-
-    public PosConditionEntity(Integer posConditionId, String posConditionName){
-        this.posConditionId = posConditionId;
-        this.posConditionName = posConditionName;
+    public PosConditionEntity() {
     }
 
-
-    public Integer getPosConditionId() {
-        return posConditionId;
+    public PosConditionEntity(Integer id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
-    public void setPosConditionId(Integer posConditionId) {
-        this.posConditionId = posConditionId;
+    public Integer getId() {
+        return id;
     }
 
-    public String getPosConditionName() {
-        return posConditionName;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setPosConditionName(String posConditionName) {
-        this.posConditionName = posConditionName;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -44,12 +45,12 @@ public class PosConditionEntity {
 
         PosConditionEntity that = (PosConditionEntity) o;
 
-        if (posConditionId != that.posConditionId) return false;
-        return true;
+        return id.equals(that.id);
+
     }
 
     @Override
     public int hashCode() {
-        return this.posConditionId.hashCode();
+        return id.hashCode();
     }
 }

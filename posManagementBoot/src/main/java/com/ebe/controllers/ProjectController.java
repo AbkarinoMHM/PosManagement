@@ -30,12 +30,17 @@ public class ProjectController {
 
     /**
      * Get all projects
-     *
+     * @param name optional search by name
      * @return All projects list
      */
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<ProjectEntity>> findAll() {
-        List<ProjectEntity> projects = this.projectRepository.findAll();
+    public ResponseEntity<List<ProjectEntity>> findAll(@RequestParam(value = "name", defaultValue = "") final String name) {
+        List<ProjectEntity> projects;
+        if(name.isEmpty()){
+            projects = this.projectRepository.findAll();
+        } else{
+            projects = this.projectRepository.findByNameIgnoreCaseContaining(name);
+        }
         if (projects.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -47,6 +52,7 @@ public class ProjectController {
      * Get all projects by page
      * @param page page number
      * @param size number of buttonSheetItems per page
+     * @param search filtration string
      * @return projects page
      */
     @RequestMapping(
@@ -59,18 +65,17 @@ public class ProjectController {
             , @RequestParam("search") String search) {
         GenericSpecificationsBuilder<ProjectEntity> builder = new GenericSpecificationsBuilder();
         Pattern pattern = Pattern.compile(GenericSpecification.SpecificationsPattern);
-        Matcher matcher = pattern.matcher(search + ","); //all searches must contain a space and a comma
+        Matcher matcher = pattern.matcher(search + ","); //all searches must contain a comma
         while (matcher.find()) {
-            builder.with(matcher.group(1), matcher.group(2), matcher.group(5).trim());
+            builder.with(matcher.group(GenericSpecification.fieldNameIndex),
+                    matcher.group(GenericSpecification.operatorIndex), matcher.group(GenericSpecification.valueIndex).trim());
         }
         Specification<ProjectEntity> spec = builder.build();
         Page<ProjectEntity> projectsPage = this.projectRepository.findAll(spec, new PageRequest(page-1, size));
         if (page > projectsPage.getTotalPages()) {
-            //return (Page<ProjectEntity>) new Exception("Not found");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(projectsPage, HttpStatus.OK);
-        //return projectsPage;
     }
 
     /**
@@ -79,7 +84,11 @@ public class ProjectController {
      * @param projectId The project id to look for
      * @return The project with id = @projectId
      */
-    @RequestMapping(value = "/{projectId}", method = RequestMethod.GET)
+    @RequestMapping(
+            value = "/{projectId}",
+            method = RequestMethod.GET,
+            produces = {"application/json"}
+    )
     public ResponseEntity<ProjectEntity> findOne(@PathVariable("projectId") Long projectId) {
         ProjectEntity project = this.projectRepository.findOne(projectId);
         if (project == null) {
@@ -89,32 +98,39 @@ public class ProjectController {
     }
 
     /**
-     * Create a new project
-     * @param project The project to be created
+     * Create a new newRecord
+     * @param newRecord The newRecord to be created
      * @param ucBuilder
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<ProjectEntity> create(@RequestBody ProjectEntity project, UriComponentsBuilder ucBuilder) {
-        this.projectRepository.saveAndFlush(project);
+    @RequestMapping(
+            method = RequestMethod.POST,
+            produces = {"application/json"}
+    )
+    public ResponseEntity<ProjectEntity> create(@RequestBody ProjectEntity newRecord, UriComponentsBuilder ucBuilder) {
+        this.projectRepository.saveAndFlush(newRecord);
         //HttpHeaders headers = new HttpHeaders();
-        //headers.setLocation(ucBuilder.path("/project/{projectId}").buildAndExpand(project.getRegionId()).toUri());
-        return new ResponseEntity<>(project, HttpStatus.CREATED);
+        //headers.setLocation(ucBuilder.path("/newRecord/{projectId}").buildAndExpand(newRecord.getRegionId()).toUri());
+        return new ResponseEntity<>(newRecord, HttpStatus.CREATED);
     }
 
     /**
      * Update a project
      * @param projectId The ID of the project to be updated
-     * @param updatedRegion The new project name
+     * @param updatedRecord The new project name
      * @return The updated project
      */
-    @RequestMapping(value = "/{projectId}", method = RequestMethod.PUT)
-    public ResponseEntity<ProjectEntity> update(@PathVariable("projectId") Long projectId, @RequestBody ProjectEntity updatedRegion){
+    @RequestMapping(
+            value = "/{projectId}",
+            method = RequestMethod.PUT,
+            produces = {"application/json"}
+    )
+    public ResponseEntity<ProjectEntity> update(@PathVariable("projectId") Long projectId, @RequestBody ProjectEntity updatedRecord){
         ProjectEntity projectEntity = this.projectRepository.findOne(projectId);
         if(projectEntity == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        projectEntity.setProjectName(updatedRegion.getProjectName());
+        projectEntity.setName(updatedRecord.getName());
         this.projectRepository.saveAndFlush(projectEntity);
         return new ResponseEntity<>(projectEntity, HttpStatus.OK);
     }
@@ -124,7 +140,11 @@ public class ProjectController {
      * @param projectId The ID of the project to be deleted
      * @return HTTP NO_CONTENT
      */
-    @RequestMapping(value="/{projectId}", method = RequestMethod.DELETE)
+    @RequestMapping(
+            value="/{projectId}",
+            method = RequestMethod.DELETE,
+            produces = {"application/json"}
+    )
     public ResponseEntity<Void> deleteOne(@PathVariable("projectId") Long projectId){
         if(!this.projectRepository.exists(projectId)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

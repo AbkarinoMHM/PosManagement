@@ -1,0 +1,64 @@
+<md-dialog aria-label="Add Region">
+    <form name="addForm" ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Add Technician</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Technician Name *</label>
+                    <input type="text" name="name" ng-model="info.name" required>
+                    <div ng-messages="addForm.name.$error">
+                        <div ng-message="required">
+                            Technician name is required!
+                        </div>
+                    </div>
+                </md-input-container>
+                <div class="row">
+                    <md-input-container class="md-block col-md-6" flex-gt-sm>
+                        <label>Technician Title</label>
+                        <input type="text" name="title" ng-model="info.title">
+                    </md-input-container>
+
+                    <md-input-container class="md-block col-md-6" flex-gt-sm>
+                        <label>Technician Rate</label>
+                        <input type="number" max="5" name="rate" ng-model="info.rate">
+                        <div ng-messages="addForm.name.$error">
+                            <div ng-message="max">
+                                Maximum rate is 5!
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div class="row">
+                    <md-input-container class="md-block col-md-6" flex-gt-sm>
+                        <label>Technician Mobile</label>
+                        <input type="text" name="mobile" ng-model="info.mobile">
+                    </md-input-container>
+                    <md-input-container class="md-block col-md-6" flex-gt-sm>
+                        <label>Technician Tel</label>
+                        <input type="text" name="tel" ng-model="info.tel">
+                    </md-input-container>
+                </div>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Technician Address</label>
+                    <input type="text" name="address" ng-model="info.address">
+                </md-input-container>
+
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button type="submit" ng-click="insertRecord(info)">
+                Add
+            </md-button>
+            <md-button ng-click="cancel()">
+                Cancel
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

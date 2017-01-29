@@ -17,6 +17,9 @@ import java.util.List;
 @PreAuthorize("hasRole('USER')")
 @Repository
 public interface RegionRepository extends JpaRepository<RegionEntity, Integer> , JpaSpecificationExecutor<RegionEntity> {
+
+    List<RegionEntity> findRegionByNameIgnoreCaseContaining(String name);
+
     @PreAuthorize("hasRole('ADMIN')")
     @Override
     RegionEntity saveAndFlush(RegionEntity obj);

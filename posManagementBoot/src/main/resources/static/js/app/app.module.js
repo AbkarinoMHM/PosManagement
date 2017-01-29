@@ -3,7 +3,8 @@
 // Define the `posApp` module
 angular.module('posApp', ['ngCookies',
     'ngMaterial', 'ngMessages', 'ngSanitize', 'ngRoute','ui.bootstrap', 'ui.grid',
-    'ui.grid.selection', 'ui.grid','ui.grid.pagination', 'ui.grid.autoResize', 'login', 'region', 'project', 'user'
+    'ui.grid.selection', 'ui.grid','ui.grid.pagination', 'ui.grid.autoResize', 'ui.grid.pinning', 'ui.grid.exporter', 'login', 'region', 'project', 'user',
+    'area','merchantBranch', 'vendorBranch', 'serviceCenter', 'technician', 'posType', 'posVendor', 'pos'
 ]).controller('mainController', function ($rootScope, $scope, $log, $http, $location, AuthenticationService) {
 
     $log.log("Globals:");

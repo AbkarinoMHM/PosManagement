@@ -1,0 +1,58 @@
+<div class="container wrapper">
+  <div class="container wrapper">
+
+
+    <!--<div class="navbar-header">-->
+      <!--<div class="alert alert-default navbar-brand search-box">-->
+        <!--&lt;!&ndash;<button class="btn btn-primary" ng-show="show_form" ng-click="formToggle()">Add project <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>&ndash;&gt;-->
+        <!--<button class="btn btn-primary" ng-show="show_form" ng-click="showAddForm($event)">Add User <span-->
+                <!--class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>-->
+      <!--</div>-->
+      <!--<div class="alert alert-default input-group search-box">-->
+<!--<span class="input-group-btn">-->
+<!--<input type="text" class="form-control" placeholder="Search project details..." ng-model="search_query">-->
+<!--</span>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;</nav>&ndash;&gt;-->
+    <!--<div class="clearfix"></div>-->
+
+    <!--&lt;!&ndash; Table to show projects details &ndash;&gt;-->
+    <!--<div class="table-responsive">-->
+      <!--<table class="table table-hover">-->
+        <!--<tr>-->
+          <!--<th>ID</th>-->
+          <!--<th>Full Name</th>-->
+          <!--<th>Email Address</th>-->
+          <!--<th>Address</th>-->
+          <!--<th>Mobile</th>-->
+          <!--<th>Is Customer User</th>-->
+          <!--<th></th>-->
+          <!--<th></th>-->
+        <!--</tr>-->
+        <!--<tr ng-repeat="detail in details| filter:search_query">-->
+          <!--<td>{{detail.userId}}</td>-->
+          <!--<td>{{detail.userFullName}}</td>-->
+          <!--<td>{{detail.userEmail}}</td>-->
+          <!--<td>{{detail.userAddress}}</td>-->
+          <!--<td>{{detail.userMobile}}</td>-->
+          <!--<td>{{detail.userIsCustomer}}</td>-->
+
+          <!--<td>-->
+            <!--<button class="btn btn-warning" ng-click="showEditForm(detail)" title="Edit"><span-->
+                    <!--class="glyphicon glyphicon-edit"></span></button>-->
+          <!--</td>-->
+          <!--<td>-->
+            <!--<button class="btn btn-danger" ng-click="deleteInfo(detail)" title="Delete"><span-->
+                    <!--class="glyphicon glyphicon-trash"></span></button>-->
+          <!--</td>-->
+        <!--</tr>-->
+      <!--</table>-->
+    <!--</div>-->
+
+    <div>
+      <div ui-grid="gridOptions" ui-grid-selection class="grid" ui-grid-pagination ui-grid-pinning>
+      </div>
+    </div>
+  </div>
+</div>

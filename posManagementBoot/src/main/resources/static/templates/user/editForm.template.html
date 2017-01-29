@@ -1,14 +1,52 @@
-<md-dialog aria-label="Edit Region">
+<md-dialog aria-label="Edit User">
     <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Edit User</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
         <md-dialog-content>
             <div class="md-dialog-content">
                 <md-input-container class="md-block" flex-gt-xs>
-                    <label>Project ID</label>
-                    <input id="id" ng-model="currentRecord.projectId" disabled>
+                    <label>User ID</label>
+                    <input id="id" ng-model="currentRecord.userId" disabled>
+                </md-input-container>
+                <div class="row">
+                    <md-input-container class="md-block col-md-6" flex-gt-sm>
+                        <label>Full Name *</label>
+                        <input type="text" name="fullName" ng-model="currentRecord.userFullName" required>
+                        <div ng-messages="addForm.fullName.$error">
+                            <div ng-message="required">
+                                Full name is required!
+                            </div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block col-md-6" flex-gt-sm>
+                        <label>Email *</label>
+                        <input type="email" name="email" ng-model="currentRecord.userEmail" disabled>
+                        <div ng-messages="addForm.email.$error">
+                            <div ng-message="required">
+                                Email is required!
+                            </div>
+                            <div ng-message="email">
+                                Enter a valid email address!
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Address</label>
+                    <input type="text" name="address" ng-model="currentRecord.userAddress">
                 </md-input-container>
                 <md-input-container class="md-block" flex-gt-sm>
-                    <label>Project Name</label>
-                    <input id="Name" ng-model="currentRecord.projectName">
+                    <label>Mobile</label>
+                    <input type="text" name="mobile" ng-model="currentRecord.userMobile">
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <md-checkbox ng-model="currentRecord.userIsCustomer" aria-label="Checkbox 1">
+                        {{customerName}} user
+                    </md-checkbox>
                 </md-input-container>
             </div>
         </md-dialog-content>

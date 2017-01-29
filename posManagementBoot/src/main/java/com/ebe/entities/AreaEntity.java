@@ -11,47 +11,48 @@ public class AreaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "area_seq")
     @SequenceGenerator(name = "area_seq", sequenceName = "area_area_id_seq", allocationSize = 1)
-    private Long areaId;
-    @Basic(optional = false)
-    private String areaName;
+    @Column(name="area_id")
+    private Long id;
+    @Column(name="area_name", nullable = false)
+    private String name;
 
-//    @ManyToOne(optional = false)
-//    @JoinColumn(name="region_id",referencedColumnName="region_id")
-//    private RegionEntity region;
+    @ManyToOne(optional = false)
+    @JoinColumn(name="region_id",referencedColumnName="region_id")
+    private RegionEntity region;
 
 
     public AreaEntity() {
     }
 
-    public AreaEntity(String areaName, RegionEntity region) {
-        this.areaName = areaName;
-        //this.region = region;
+    public AreaEntity(String name, RegionEntity region) {
+        this.name = name;
+        this.region = region;
     }
 
-    public Long getAreaId() {
-        return areaId;
+    public Long getId() {
+        return id;
     }
 
-    public void setAreaId(Long areaId) {
-        this.areaId = areaId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
 
-    public String getAreaName() {
-        return areaName;
+    public String getName() {
+        return name;
     }
 
-    public void setAreaName(String areaName) {
-        this.areaName = areaName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-//    public RegionEntity getRegion() {
-//        return region;
-//    }
-//
-//    public void setRegion(RegionEntity region) {
-//        this.region = region;
-//    }
+    public RegionEntity getRegion() {
+        return region;
+    }
+
+    public void setRegion(RegionEntity region) {
+        this.region = region;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -60,12 +61,12 @@ public class AreaEntity {
 
         AreaEntity that = (AreaEntity) o;
 
-        if (areaId != that.areaId) return false;
+        if (id != that.id) return false;
         return true;
     }
 
     @Override
     public int hashCode() {
-        return this.areaId.hashCode();
+        return this.id.hashCode();
     }
 }

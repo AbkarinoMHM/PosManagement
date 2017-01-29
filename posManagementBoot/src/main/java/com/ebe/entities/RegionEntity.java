@@ -12,34 +12,34 @@ public class RegionEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "region_seq")
     @SequenceGenerator(name="region_seq", sequenceName="region_region_id_seq", allocationSize=1)
     @Id
-    //@Column(name="region_id")
-    private Integer regionId;
-    @Basic(optional = false)
-    private String regionName;
+    @Column(name="region_id")
+    private Integer id;
+    @Column(name="region_name", nullable = false)
+    private String name;
 
     public RegionEntity() {
     }
 
     public RegionEntity(String name) {
-        this.setRegionName(name);
+        this.setName(name);
     }
 
 
-    public Integer getRegionId() {
-        return regionId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setRegionId(Integer regionId) {
-        this.regionId = regionId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
 
-    public String getRegionName() {
-        return regionName;
+    public String getName() {
+        return name;
     }
 
-    public void setRegionName(String regionName) {
-        this.regionName = regionName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -49,19 +49,19 @@ public class RegionEntity {
 
         RegionEntity that = (RegionEntity) o;
 
-        if (regionId != that.regionId) return false;
-        if (regionName != null ? !regionName.equals(that.regionName) : that.regionName != null) return false;
+        if (id != that.id) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return this.regionId.hashCode();
+        return this.id.hashCode();
     }
 
     @Override
     public String toString() {
-        return "Region ID: " + this.getRegionId() + ", Region Name: " + this.getRegionName();
+        return "Region ID: " + this.getId() + ", Region Name: " + this.getName();
     }
 }

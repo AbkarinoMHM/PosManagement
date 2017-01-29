@@ -4,10 +4,8 @@ import com.ebe.entities.RegionEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import com.ebe.common.GeneralLogger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +13,7 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -41,26 +40,37 @@ public class RegoinRepositoryTest {
     @Test
     public void testCreateRegion() throws Exception {
         RegionEntity regionEntity = new RegionEntity();
-        regionEntity.setRegionName("Region1");
+        regionEntity.setName("Region1");
         repository.saveAndFlush(regionEntity);
-        Integer id = regionEntity.getRegionId();
+        Integer id = regionEntity.getId();
         assertThat(id, is(notNullValue()));
 
         RegionEntity again = repository.findOne(id);
-        assertThat(again.getRegionId(), is(id));
+        assertThat(again.getId(), is(id));
         GeneralLogger.info(this.getClass(), again.toString());
-        assertThat(again.getRegionName(), is("Region1"));
+        assertThat(again.getName(), is("Region1"));
     }
 
     @Test
     public void testUpdateRegion() throws Exception {
         RegionEntity regionEntity = new RegionEntity();
-        regionEntity.setRegionName("Region1");
+        regionEntity.setName("Region1");
         repository.save(regionEntity);
-        Integer id = regionEntity.getRegionId();
-        regionEntity.setRegionName("TestRegion");
+        Integer id = regionEntity.getId();
+        regionEntity.setName("TestRegion");
         repository.save(regionEntity);
         RegionEntity again = repository.findOne(id);
-        assertThat(again.getRegionName(), is("TestRegion"));
+        assertThat(again.getName(), is("TestRegion"));
+    }
+
+    @Test
+    public void testDeleteRegion() throws Exception{
+        RegionEntity projectEntity = new RegionEntity("Test Region");
+        this.repository.save(projectEntity);
+        Integer id = projectEntity.getId();
+        assertThat(id, is(notNullValue()));
+        repository.delete(id);
+        RegionEntity again = this.repository.findOne(id);
+        assertThat(again, is(nullValue()));
     }
 }

@@ -1,7 +1,10 @@
 package com.ebe.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by saado on 10/17/2016.
@@ -9,40 +12,83 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "pos")
 public class PosEntity {
-    private Long posid;
-    private String serialNumber;
-    private String vendor;
-    private String model;
-    private Integer typeId;
-    private String made;
-    private String partNumber;
-    private String otherFeatures;
-    private String batchNumber;
-    private Integer conditionId;
-    private String remarks;
-    private Integer statusId;
-    private Long merchantBranch;
-    private Long fileId;
-    private String terminalId;
-    private String nodeId;
-    private String notes;
-    private String tenderNum;
-    private Long projectId;
-    private Long ebeBranchId;
-    private Timestamp timestamp;
-
     @Id
-    @Column(name = "POSID", nullable = false)
-    public Long getPosid() {
-        return posid;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pos_seq")
+    @SequenceGenerator(name = "pos_seq", sequenceName = "pos_pos_id_seq", allocationSize = 1)
+    @Column(name = "pos_id", nullable = false)
+    private Long id;
+    @Column(name = "pos_serial_number", nullable = false)
+    private String serialNumber;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "pos_vendor_id", referencedColumnName = "pos_vendor_id")
+    private PosVendorEntity vendor;
+    @Column(name = "pos_model")
+    private String model;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "pos_type_id", referencedColumnName = "pos_type_id")
+    private PosTypeEntity type;
+    @Column(name = "pos_made")
+    private String made;
+    @Column(name = "pos_part_number")
+    private String partNumber;
+    @Column(name = "pos_other_features")
+    private String otherFeatures;
+    @Column(name = "pos_batch_number")
+    private String batchNumber;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "pos_condition_id", referencedColumnName = "pos_condition_id")
+    private PosConditionEntity condition;
+    @Column(name = "pos_remarks")
+    private String remarks;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "pos_status_id", referencedColumnName = "pos_status_id")
+    private PosStatusEntity status;
+    @Column(name = "pos_file_id")
+    private Long file;
+    @Column(name = "pos_terminal_id")
+    private String terminal;
+    @Column(name = "pos_node_id")
+    private String node;
+    @Column(name = "pos_tender_num")
+    private String tender;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "pos_project_id", referencedColumnName = "project_id")
+    private ProjectEntity project;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "pos_vendor_branch_id", referencedColumnName = "vendor_branch_id")
+    private VendorBranchEntity vendorBranch;
+    @Column(name = "pos_timestamp", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
+    private Date timestamp;
+
+    @PrePersist
+    protected void onCreate() {
+        this.timestamp = new Date();
+    }
+    public PosEntity() {
     }
 
-    public void setPosid(Long posid) {
-        this.posid = posid;
+    public PosEntity(String serialNumber, PosVendorEntity vendor, PosTypeEntity type, PosConditionEntity condition,
+                     PosStatusEntity status, MerchantBranchEntity merchantBranch, ProjectEntity project,
+                     VendorBranchEntity vendorBranch) {
+        this.serialNumber = serialNumber;
+        this.vendor = vendor;
+        this.type = type;
+        this.condition = condition;
+        this.status = status;
+        this.project = project;
+        this.vendorBranch = vendorBranch;
     }
 
-    @Basic
-    @Column(name = "SerialNumber", nullable = false, length = 50)
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getSerialNumber() {
         return serialNumber;
     }
@@ -51,18 +97,14 @@ public class PosEntity {
         this.serialNumber = serialNumber;
     }
 
-    @Basic
-    @Column(name = "Vendor", nullable = true, length = 100)
-    public String getVendor() {
+    public PosVendorEntity getVendor() {
         return vendor;
     }
 
-    public void setVendor(String vendor) {
+    public void setVendor(PosVendorEntity vendor) {
         this.vendor = vendor;
     }
 
-    @Basic
-    @Column(name = "Model", nullable = true, length = 100)
     public String getModel() {
         return model;
     }
@@ -71,18 +113,14 @@ public class PosEntity {
         this.model = model;
     }
 
-    @Basic
-    @Column(name = "TypeID", nullable = true)
-    public Integer getTypeId() {
-        return typeId;
+    public PosTypeEntity getType() {
+        return type;
     }
 
-    public void setTypeId(Integer typeId) {
-        this.typeId = typeId;
+    public void setType(PosTypeEntity type) {
+        this.type = type;
     }
 
-    @Basic
-    @Column(name = "Made", nullable = true, length = 100)
     public String getMade() {
         return made;
     }
@@ -91,8 +129,6 @@ public class PosEntity {
         this.made = made;
     }
 
-    @Basic
-    @Column(name = "PartNumber", nullable = true, length = 100)
     public String getPartNumber() {
         return partNumber;
     }
@@ -101,8 +137,6 @@ public class PosEntity {
         this.partNumber = partNumber;
     }
 
-    @Basic
-    @Column(name = "OtherFeatures", nullable = true, length = 100)
     public String getOtherFeatures() {
         return otherFeatures;
     }
@@ -111,8 +145,6 @@ public class PosEntity {
         this.otherFeatures = otherFeatures;
     }
 
-    @Basic
-    @Column(name = "BatchNumber", nullable = true, length = 100)
     public String getBatchNumber() {
         return batchNumber;
     }
@@ -121,18 +153,14 @@ public class PosEntity {
         this.batchNumber = batchNumber;
     }
 
-    @Basic
-    @Column(name = "ConditionID", nullable = true)
-    public Integer getConditionId() {
-        return conditionId;
+    public PosConditionEntity getCondition() {
+        return condition;
     }
 
-    public void setConditionId(Integer conditionId) {
-        this.conditionId = conditionId;
+    public void setCondition(PosConditionEntity condition) {
+        this.condition = condition;
     }
 
-    @Basic
-    @Column(name = "Remarks", nullable = true, length = 100)
     public String getRemarks() {
         return remarks;
     }
@@ -141,103 +169,68 @@ public class PosEntity {
         this.remarks = remarks;
     }
 
-    @Basic
-    @Column(name = "StatusID", nullable = true)
-    public Integer getStatusId() {
-        return statusId;
+    public PosStatusEntity getStatus() {
+        return status;
     }
 
-    public void setStatusId(Integer statusId) {
-        this.statusId = statusId;
+    public void setStatus(PosStatusEntity status) {
+        this.status = status;
     }
 
-    @Basic
-    @Column(name = "MerchantBranch", nullable = true)
-    public Long getMerchantBranch() {
-        return merchantBranch;
+    public Long getFile() {
+        return file;
     }
 
-    public void setMerchantBranch(Long merchantBranch) {
-        this.merchantBranch = merchantBranch;
+    public void setFile(Long file) {
+        this.file = file;
     }
 
-    @Basic
-    @Column(name = "FileID", nullable = true)
-    public Long getFileId() {
-        return fileId;
+    public String getTerminal() {
+        return terminal;
     }
 
-    public void setFileId(Long fileId) {
-        this.fileId = fileId;
+    public void setTerminal(String terminal) {
+        this.terminal = terminal;
     }
 
-    @Basic
-    @Column(name = "TerminalID", nullable = true, length = 50)
-    public String getTerminalId() {
-        return terminalId;
+    public String getNode() {
+        return node;
     }
 
-    public void setTerminalId(String terminalId) {
-        this.terminalId = terminalId;
+    public void setNode(String node) {
+        this.node = node;
     }
 
-    @Basic
-    @Column(name = "NodeID", nullable = true, length = 50)
-    public String getNodeId() {
-        return nodeId;
+
+    public String getTender() {
+        return tender;
     }
 
-    public void setNodeId(String nodeId) {
-        this.nodeId = nodeId;
+    public void setTender(String tender) {
+        this.tender = tender;
     }
 
-    @Basic
-    @Column(name = "Notes", nullable = true, length = 255)
-    public String getNotes() {
-        return notes;
+    public ProjectEntity getProject() {
+        return project;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setProject(ProjectEntity project) {
+        this.project = project;
     }
 
-    @Basic
-    @Column(name = "TenderNum", nullable = true, length = 50)
-    public String getTenderNum() {
-        return tenderNum;
+    public VendorBranchEntity getVendorBranch() {
+        return vendorBranch;
     }
 
-    public void setTenderNum(String tenderNum) {
-        this.tenderNum = tenderNum;
+    public void setVendorBranch(VendorBranchEntity vendorBranch) {
+        this.vendorBranch = vendorBranch;
     }
 
-    @Basic
-    @Column(name = "ProjectID", nullable = true)
-    public Long getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(Long projectId) {
-        this.projectId = projectId;
-    }
-
-    @Basic
-    @Column(name = "EbeBranchID", nullable = true)
-    public Long getEbeBranchId() {
-        return ebeBranchId;
-    }
-
-    public void setEbeBranchId(Long ebeBranchId) {
-        this.ebeBranchId = ebeBranchId;
-    }
-
-    @Basic
-    @Column(name = "Timestamp", nullable = true)
-    public Timestamp getTimestamp() {
+    public Date getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -248,12 +241,12 @@ public class PosEntity {
 
         PosEntity posEntity = (PosEntity) o;
 
-        if (posid != posEntity.posid) return false;
-        return true;
+        return id.equals(posEntity.id);
+
     }
 
     @Override
     public int hashCode() {
-        return this.posid.hashCode();
+        return id.hashCode();
     }
 }

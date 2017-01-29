@@ -9,7 +9,7 @@ body {
 /* Wrapper for page content to push down footer */
 .mainWrap {
     /*min-height: 100%;*/
-    height: auto !important;
+    /*height: auto !important;*/
     height: 100%;
     /* Negative indent footer by it's height */
     margin: 0 auto -60px;
@@ -88,7 +88,7 @@ table tr th {
     height: 100% !important;
     width: 100%;
     position: fixed;
-    padding-top: 40px;
+    padding-top: 15%;
     padding-bottom: 40px;
     background-color: #eee;
 }

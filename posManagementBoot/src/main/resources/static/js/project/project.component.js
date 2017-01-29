@@ -6,7 +6,7 @@ angular.module('project').component('projectsList', {
     controller: function projectController($scope, $log, $mdBottomSheet, HttpService,
                                            DialogService, ButtonsSheetService, CommonService) {
         /*
-        Initialization section
+         Initialization section
          */
         //component general settings
         var self = this;
@@ -41,8 +41,9 @@ angular.module('project').component('projectsList', {
          * Set grid options
          */
         $scope.gridOptions = {
-            paginationPageSizes: [5, 10, 20, 50, 100],
-            enableColumnMenus: false,
+            paginationPageSizes: [5, 10, 20, 50, 100,200],
+            enableColumnMenus: true,
+            enableGridMenu: true,
             useExternalPagination: true,
             enableSorting: true,
             enableFiltering: false,
@@ -52,9 +53,12 @@ angular.module('project').component('projectsList', {
             rowHeight: 30,
             multiSelect: true,
             paginationPageSize: paginationOptions.pageSize,
+            exporterCsvFilename: self.moduleName + '.csv',
+            exporterMenuPdf: false,
+            exporterIsExcelCompatible: true,
             columnDefs: [
-                {name: 'projectId', displayName: "ID", pinnedLeft: true, headerTooltip: "Filter Name: projectId"},
-                {name: 'projectName', displayName: "Project Name", headerTooltip: "Filter Name: projectName"},
+                {name: 'id', displayName: "ID", pinnedLeft: true, headerTooltip: "Filter Name: id"},
+                {name: 'name', displayName: "Project Name", headerTooltip: "Filter Name: name"},
                 {
                     name: 'Edit', maxWidth: 50, displayName: "", pinnedRight: true, enableSorting: false,
                     enableCellEdit: false, enableFiltering: false, enableColumnMenus: false,
@@ -90,29 +94,11 @@ angular.module('project').component('projectsList', {
          Filtration section
          */
         /**
-         * Filter is added
+         * Filter is changed
          * @param chip
          */
-        $scope.filterAdded = function (chip) {
-            $log.log("Chip:");
-            $log.log(chip);
-            $log.log("Tags:");
-            $log.log($scope.searchTags);
+        $scope.filterChanged = function (chip) {
             getPaginatedInfo(paginationOptions.pageNumber, paginationOptions.pageSize);
-
-        };
-
-        /**
-         * Filter is removed
-         * @param chip
-         */
-        $scope.filterRemoved = function (chip) {
-            $log.log("Chip:");
-            $log.log(chip);
-            $log.log("Tags:");
-            $log.log($scope.searchTags);
-            getPaginatedInfo(paginationOptions.pageNumber, paginationOptions.pageSize);
-
         };
         /**************************************************************************************************************/
         /*
@@ -198,9 +184,9 @@ angular.module('project').component('projectsList', {
          * @param record The record to be inserted
          */
         $scope.insertRecord = function (record) {
-            if (record.projectName) {
+            if (record.name) {
                 HttpService.httpPost(self.baseServiceUrl, {
-                    "projectName": record.projectName
+                    "name": record.name
                 }).then(function (data) {
                     DialogService.toastrSuccess(self.moduleName, 'added');
                     getPaginatedInfo(paginationOptions.pageNumber, paginationOptions.pageSize);
@@ -217,8 +203,8 @@ angular.module('project').component('projectsList', {
          * @param record The record to be updated
          */
         $scope.updateRecord = function (record) {
-            HttpService.httpPut(self.baseServiceUrl + "/" + record.projectId, {
-                "projectName": record.projectName
+            HttpService.httpPut(self.baseServiceUrl + "/" + record.id, {
+                "name": record.name
             }).then(function (response) {
                 DialogService.toastrSuccess(self.moduleName, 'updated');
                 getPaginatedInfo(paginationOptions.pageNumber, paginationOptions.pageSize);
@@ -238,7 +224,7 @@ angular.module('project').component('projectsList', {
             //show confirmatin dialog
             DialogService.showConfirmDialog('Delete ' + self.moduleName, 'Are you sure to delete this record?', 'Record will be deleted permanently.')
                 .then(function (response) {
-                    HttpService.httpDelete(self.baseServiceUrl + "/" + info.projectId).then(function (data) {
+                    HttpService.httpDelete(self.baseServiceUrl + "/" + info.id).then(function (data) {
                         DialogService.toastrSuccess(self.moduleName, 'deleted');
                         var visibleRows = $scope.gridApi.core.getVisibleRows().length;
                         $log.log('Visible rows: ' + visibleRows);

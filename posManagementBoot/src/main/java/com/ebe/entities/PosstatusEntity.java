@@ -6,35 +6,36 @@ import javax.persistence.*;
  * Created by saado on 10/17/2016.
  */
 @Entity
-@Table(name = "posstatus")
+@Table(name = "pos_status")
 public class PosStatusEntity {
     @Id
-    private Integer posStatusId;
-    @Basic(optional = false)
-    private String posStatusName;
+    @Column(name = "pos_status_id", nullable = false)
+    private Integer id;
+    @Column(name = "pos_status_name", nullable = false)
+    private String name;
 
     public PosStatusEntity() {
     }
 
-    public PosStatusEntity(Integer posStatusId, String posStatusName) {
-        this.posStatusId = posStatusId;
-        this.posStatusName = posStatusName;
+    public PosStatusEntity(Integer id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
-    public Integer getPosStatusId() {
-        return posStatusId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setPosStatusId(Integer posStatusId) {
-        this.posStatusId = posStatusId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getPosStatusName() {
-        return posStatusName;
+    public String getName() {
+        return name;
     }
 
-    public void setPosStatusName(String posStatusName) {
-        this.posStatusName = posStatusName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -44,14 +45,20 @@ public class PosStatusEntity {
 
         PosStatusEntity that = (PosStatusEntity) o;
 
-        if (posStatusId != that.posStatusId) return false;
+        return id.equals(that.id);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
+        return id.hashCode();
+    }
 
-        return this.posStatusId.hashCode();
+    @Override
+    public String toString() {
+        return "PosStatusEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

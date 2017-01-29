@@ -34,28 +34,4 @@ public class PosStatusRepositoryTest {
         List<PosStatusEntity> posStatusList = repository.findAll();
         assertTrue(posStatusList.size() >= 3);
     }
-
-    @Test
-    public void testCreatePosStatus() throws Exception {
-        PosStatusEntity posStatusEntity = new PosStatusEntity(1, "Pos Status 1");
-        repository.saveAndFlush(posStatusEntity);
-        Integer id = posStatusEntity.getPosStatusId();
-        assertThat(id, is(notNullValue()));
-
-        PosStatusEntity again = repository.findOne(id);
-        assertThat(again.getPosStatusId(), is(id));
-        GeneralLogger.info(this.getClass(), again.toString());
-        assertThat(again.getPosStatusName(), is("Pos Status 1"));
-    }
-
-    @Test
-    public void testUpdatePosStatus() throws Exception {
-        PosStatusEntity posStatusEntity = new PosStatusEntity(1, "Pos Status 1");
-        repository.save(posStatusEntity);
-        Integer id = posStatusEntity.getPosStatusId();
-        posStatusEntity.setPosStatusName("Test Pos status");
-        repository.save(posStatusEntity);
-        PosStatusEntity again = repository.findOne(id);
-        assertThat(again.getPosStatusName(), is("Test Pos status"));
-    }
 }

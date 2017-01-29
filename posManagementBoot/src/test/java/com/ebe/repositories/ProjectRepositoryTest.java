@@ -13,6 +13,7 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -39,26 +40,37 @@ public class ProjectRepositoryTest {
     @Test
     public void testCreateProject() throws Exception {
         ProjectEntity regionEntity = new ProjectEntity();
-        regionEntity.setProjectName("Project1");
+        regionEntity.setName("Project1");
         repository.saveAndFlush(regionEntity);
-        Long id = regionEntity.getProjectId();
+        Long id = regionEntity.getId();
         assertThat(id, is(notNullValue()));
 
         ProjectEntity again = repository.findOne(id);
-        assertThat(again.getProjectId(), is(id));
+        assertThat(again.getId(), is(id));
         GeneralLogger.info(this.getClass(), again.toString());
-        assertThat(again.getProjectName(), is("Project1"));
+        assertThat(again.getName(), is("Project1"));
     }
 
     @Test
     public void testUpdateProject() throws Exception {
-        ProjectEntity regionEntity = new ProjectEntity();
-        regionEntity.setProjectName("Project1");
-        repository.save(regionEntity);
-        Long id = regionEntity.getProjectId();
-        regionEntity.setProjectName("TestRegion");
-        repository.save(regionEntity);
+        ProjectEntity projectEntity = new ProjectEntity();
+        projectEntity.setName("Project1");
+        repository.save(projectEntity);
+        Long id = projectEntity.getId();
+        projectEntity.setName("TestRegion");
+        repository.save(projectEntity);
         ProjectEntity again = repository.findOne(id);
-        assertThat(again.getProjectName(), is("TestRegion"));
+        assertThat(again.getName(), is("TestRegion"));
+    }
+
+    @Test
+    public void testDeleteProject() throws Exception{
+        ProjectEntity projectEntity = new ProjectEntity("Test Project");
+        this.repository.save(projectEntity);
+        Long id = projectEntity.getId();
+        assertThat(id, is(notNullValue()));
+        repository.delete(id);
+        ProjectEntity again = this.repository.findOne(id);
+        assertThat(again, is(nullValue()));
     }
 }

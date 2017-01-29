@@ -6,67 +6,56 @@ import javax.persistence.*;
  * Created by saado on 10/17/2016.
  */
 @Entity
-@Table(name = "merchantbranch")
-public class MerchantbranchEntity {
-    private Long merchantBranchId;
-    private Long merchantId;
-    private String locationName;
-    private String locationAddress;
-    private Long areaId;
-    private String notes;
-
+@Table(name = "merchant_branch")
+public class MerchantBranchEntity {
     @Id
-    @Column(name = "MerchantBranchID", nullable = false)
-    public Long getMerchantBranchId() {
-        return merchantBranchId;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "merchant_branch_seq")
+    @SequenceGenerator(name = "merchant_branch_seq", sequenceName = "merchant_branch_merchant_branch_id_seq", allocationSize = 1)
+    @Column(name = "merchant_branch_id")
+    private Long id;
+    @Column(name = "merchant_branch_name")
+    private String name;
+    @Column(name = "merchant_branch_address")
+    private String address;
+    @Column(name = "merchant_branch_notes")
+    private String notes;
+    @ManyToOne(optional = false)
+    @JoinColumn(name="area_id",referencedColumnName="area_id")
+    private AreaEntity area;
+
+    public MerchantBranchEntity(){
+
     }
 
-    public void setMerchantBranchId(Long merchantBranchId) {
-        this.merchantBranchId = merchantBranchId;
+    public MerchantBranchEntity(String name, AreaEntity area) {
+        this.name = name;
+        this.area = area;
     }
 
-    @Basic
-    @Column(name = "MerchantID", nullable = false)
-    public Long getMerchantId() {
-        return merchantId;
+    public Long getId() {
+        return id;
     }
 
-    public void setMerchantId(Long merchantId) {
-        this.merchantId = merchantId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    @Basic
-    @Column(name = "LocationName", nullable = true, length = 50)
-    public String getLocationName() {
-        return locationName;
+    public String getName() {
+        return name;
     }
 
-    public void setLocationName(String locationName) {
-        this.locationName = locationName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    @Basic
-    @Column(name = "LocationAddress", nullable = true, length = 100)
-    public String getLocationAddress() {
-        return locationAddress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setLocationAddress(String locationAddress) {
-        this.locationAddress = locationAddress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    @Basic
-    @Column(name = "AreaID", nullable = false)
-    public Long getAreaId() {
-        return areaId;
-    }
-
-    public void setAreaId(Long areaId) {
-        this.areaId = areaId;
-    }
-
-    @Basic
-    @Column(name = "Notes", nullable = true, length = 100)
     public String getNotes() {
         return notes;
     }
@@ -75,20 +64,38 @@ public class MerchantbranchEntity {
         this.notes = notes;
     }
 
+    public AreaEntity getArea() {
+        return area;
+    }
+
+    public void setArea(AreaEntity area) {
+        this.area = area;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MerchantbranchEntity that = (MerchantbranchEntity) o;
+        MerchantBranchEntity that = (MerchantBranchEntity) o;
 
-        if (merchantBranchId != that.merchantBranchId) return false;
+        return id.equals(that.id);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
-        return this.merchantBranchId.hashCode();
+        return id.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "MerchantBranchEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", notes='" + notes + '\'' +
+                ", area=" + area +
+                '}';
     }
 }

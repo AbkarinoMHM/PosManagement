@@ -1,0 +1,1035 @@
+{
+	"variables": [],
+	"info": {
+		"name": "PosManagement",
+		"_postman_id": "8220c554-7780-4c12-5fd3-9c651d5e949d",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Area",
+			"description": "",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"url": "http://127.0.0.1:8080/posmanagement/services/area",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/area",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic YWRtaW5AZWJlLmNvbTphZG1pbg==",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Area 2\",\n    \"region\": {\n      \"id\": 1,\n      \"name\": \"Region 1\"\n    }\n  }"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/area/40",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic YWRtaW5AZWJlLmNvbTphZG1pbg==",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Area 313\",\n  \"region\": {\n    \"id\": 1,\n    \"name\": \"Region 1\"\n  }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GetByID",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/area/40",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GetByPageAndFilter",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/area/get?page=1&size=5&search=id>3",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "deleteByID",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/area/40",
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GetByNameOrRegion",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/area?region=1&name=2",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MerchantBranch",
+			"description": "",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/merchantbranch",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/merchantbranch",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic YWRtaW5AZWJlLmNvbTphZG1pbg==",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"NSGB Branch 3\",\n    \"address\": \"address\",\n    \"notes\": \"notes\",\n    \"area\": {\n      \"id\": 2\n    }\n  }"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/merchantbranch/17",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic YWRtaW5AZWJlLmNvbTphZG1pbg==",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"NSGB Branch 22\",\n    \"address\": \"address\",\n    \"notes\": \"notes\",\n    \"area\": {\n      \"id\": 1,\n      \"name\": \"Area 1\\n\",\n      \"region\": {\n        \"id\": 1,\n        \"name\": \"Region 1\"\n      }\n    }\n  }"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GetByPageAndFilter",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/merchantbranch/get?page=1&size=5&search=area.name:2",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "deleteByID",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/merchantbranch/17",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic YWRtaW5AZWJlLmNvbTphZG1pbg==",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pos",
+			"description": "",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/pos",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic YWRtaW5AZWJlLmNvbTphZG1pbg==",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"serialNumber\": \"S123\",\r\n  \"vendor\": {\r\n  \t\"id\": \"7\"\r\n  \t},\r\n  \"model\": \"model 1\",\r\n  \"type\": {\r\n  \t\"id\":\"7\"\r\n  \t},\r\n  \"made\": \"made 1\",\r\n  \"partNumber\": \"part number 1\",\r\n  \"otherFeatures\": \"other features\",\r\n  \"batchNumber\": \"batch 1\",\r\n  \"condition\": {\r\n  \t\"id\":\"2\"\r\n  \t},\r\n  \"remarks\": \"remarks 1\",\r\n  \"status\": {\r\n  \t\"id\":\"1\"\r\n  \t},\r\n  \"merchantBranch\": {\r\n  \t\"id\":\"1\"\r\n  \t},\r\n  \"file\": \"123\",\r\n  \"terminal\": \"terminal 1\",\r\n  \"node\": \"node 1\",\r\n  \"tender\": \"tender 1\",\r\n  \"project\": {\r\n  \t\"id\":\"1\"\r\n  \t},\r\n  \"vendorBranch\": {\r\n  \t\"id\":\"2\"\r\n  \t}\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/pos",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GetByID",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/pos/11",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/pos/11",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Project 1\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteByID",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/pos/11",
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PosCondition",
+			"description": "",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/posstatus",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PosStatus",
+			"description": "",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/posstatus",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PosType",
+			"description": "",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/postype",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic YWRtaW5AZWJlLmNvbTphZG1pbg==",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Pos Type 3\"\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/postype",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GetByID",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/postype/9",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/postype/9",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic YWRtaW5AZWJlLmNvbTphZG1pbg==",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Pos Type 33\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteByID",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/postype/9",
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PosVendor",
+			"description": "",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/posvendor",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic YWRtaW5AZWJlLmNvbTphZG1pbg==",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Pos Vendor 3\"\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/posvendor",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GetByID",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/posvendor/9",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/posvendor/9",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic YWRtaW5AZWJlLmNvbTphZG1pbg==",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Pos Vendor 33\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteByID",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/posvendor/9",
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Project",
+			"description": "",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/project",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"test\"\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/project",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GetByID",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/project/11",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/project/11",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Project 1\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteByID",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/project/11",
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Region",
+			"description": "",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/region",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"region 1\"\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/region/44",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic YWRtaW5AZWJlLmNvbTphZG1pbg==",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"region 4\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GetByID",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/region/44",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/region",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "deleteByID",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/region/44",
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ServiceCenter",
+			"description": "",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/servicecenter",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/servicecenter",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic YWRtaW5AZWJlLmNvbTphZG1pbg==",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Service Center 4\",\n    \"address\": \"address\",\n    \"tel\": \"333333\",\n    \"area\": {\n      \"id\": 3\n    }\n  }"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/servicecenter/33",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic YWRtaW5AZWJlLmNvbTphZG1pbg==",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"service center 22\",\n    \"address\": \"address\",\n    \"tel\": \"22222\",\n    \"area\": {\n      \"id\": 2,\n      \"name\": \"Area 2\\n\",\n      \"region\": {\n        \"id\": 1,\n        \"name\": \"Region 1\"\n      }\n    }\n  }"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GetByPageAndFilter",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/servicecenter/get?page=1&size=5&search=area.name:2",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "deleteByID",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/servicecenter/33",
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Technician",
+			"description": "",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/technician",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Tech 3\",\r\n  \"title\": \"title 2\",\r\n  \"rate\": \"5\",\r\n  \"mobile\": \"0100100100\",\r\n  \"address\": \"Address 2\",\r\n  \"tel\": \"tel 2\"\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/technician",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GetByID",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/technician/7",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/technician/7",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Tech 11\",\r\n  \"title\": \"title 1\",\r\n  \"rate\": \"5\",\r\n  \"mobile\": \"0100100100\",\r\n  \"address\": \"Address 1\",\r\n  \"tel\": \"tel 1\"\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "deleteByID",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/technician/10",
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "VendorBranch",
+			"description": "",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/vendorbranch",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/vendorbranch",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic YWRtaW5AZWJlLmNvbTphZG1pbg==",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Ebe Branch 3\",\n    \"address\": \"address\",\n    \"tel\": \"333333\",\n    \"area\": {\n      \"id\": 2\n    }\n  }"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/vendorbranch/15",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic YWRtaW5AZWJlLmNvbTphZG1pbg==",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Ebe Branch 22\",\n    \"address\": \"address\",\n    \"tel\": \"22222\",\n    \"area\": {\n      \"id\": 2,\n      \"name\": \"Area 2\\n\",\n      \"region\": {\n        \"id\": 1,\n        \"name\": \"Region 1\"\n      }\n    }\n  }"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GetByPageAndFilter",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/vendorbranch/get?page=1&size=5&search=area.name:2",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "deleteByID",
+					"request": {
+						"url": "http://localhost:8080/posmanagement/services/vendorbranch/15",
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

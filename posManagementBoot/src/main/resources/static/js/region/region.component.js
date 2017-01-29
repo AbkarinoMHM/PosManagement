@@ -6,7 +6,7 @@ angular.module('region').component('regionsList', {
     controller: function projectController($scope, $log, $mdBottomSheet, HttpService,
                                            DialogService, ButtonsSheetService, CommonService) {
         /*
-        Initialization section
+         Initialization section
          */
         //component general settings
         var self = this;
@@ -25,6 +25,9 @@ angular.module('region').component('regionsList', {
         //filters
         $scope.searchTags = [];
 
+        //sort
+        $scope.sort = [];
+
         //buttons sheet items
         $scope.buttonSheetItems = [
             {name: 'Add New', icon: 'fa-plus'}
@@ -41,20 +44,25 @@ angular.module('region').component('regionsList', {
          * Set grid options
          */
         $scope.gridOptions = {
-            paginationPageSizes: [5, 10, 20, 50, 100],
+            paginationPageSizes: [5, 10, 20, 50, 100,200],
             enableColumnMenus: false,
             useExternalPagination: true,
             enableSorting: true,
+            useExternalSorting: true,
             enableFiltering: false,
+            useExternalFiltering: true,
             enableRowHeaderSelection: true,
             enableSelectAll: true,
             selectionRowHeaderWidth: 35,
             rowHeight: 30,
             multiSelect: true,
             paginationPageSize: paginationOptions.pageSize,
+            exporterCsvFilename: self.moduleName + '.csv',
+            exporterMenuPdf: false,
+            exporterIsExcelCompatible: true,
             columnDefs: [
-                {name: 'regionId', displayName: "ID", pinnedLeft: true, headerTooltip: "Filter Name: regionId"},
-                {name: 'regionName', displayName: "Region Name", headerTooltip: "Filter Name: regionName"},
+                {name: 'id', displayName: "ID", pinnedLeft: true, headerTooltip: "Filter Name: id"},
+                {name: 'name', displayName: "Region Name", headerTooltip: "Filter Name: name"},
                 {
                     name: 'Edit', maxWidth: 50, displayName: "", pinnedRight: true, enableSorting: false,
                     enableCellEdit: false, enableFiltering: false, enableColumnMenus: false,
@@ -69,6 +77,22 @@ angular.module('region').component('regionsList', {
                         paginationOptions.pageSize = pageSize;
                         getPaginatedInfo(newPage, pageSize);
                     });
+                gridApi.core.on.sortChanged($scope, function (grid, sortColumns) {
+                    $scope.sort = [];
+                    angular.forEach(sortColumns, function (sortColumn) {
+                        $scope.sort.push({fieldName: sortColumn.name, order: sortColumn.sort.direction});
+                        $log.log(sortColumn);
+                    });
+
+                });
+                gridApi.core.on.filterChanged($scope, function () {
+                    // $scope.filter = [];
+                    // angular.forEach(self.grid.columns, function (column) {
+                    //     if (column.filters[0].term) {
+                    //         $log.log(column);
+                    //     }
+                    // });
+                });
                 gridApi.selection.on.rowSelectionChanged($scope, function (row) {
                     $scope.selectedRecord = row;
                     $log.log("Selected row:");
@@ -90,29 +114,11 @@ angular.module('region').component('regionsList', {
          Filtration section
          */
         /**
-         * Filter is added
+         * Filter is changed
          * @param chip
          */
-        $scope.filterAdded = function (chip) {
-            $log.log("Chip:");
-            $log.log(chip);
-            $log.log("Tags:");
-            $log.log($scope.searchTags);
+        $scope.filterChanged = function (chip) {
             getPaginatedInfo(paginationOptions.pageNumber, paginationOptions.pageSize);
-
-        };
-
-        /**
-         * Filter is removed
-         * @param chip
-         */
-        $scope.filterRemoved = function (chip) {
-            $log.log("Chip:");
-            $log.log(chip);
-            $log.log("Tags:");
-            $log.log($scope.searchTags);
-            getPaginatedInfo(paginationOptions.pageNumber, paginationOptions.pageSize);
-
         };
         /**************************************************************************************************************/
         /*
@@ -198,9 +204,9 @@ angular.module('region').component('regionsList', {
          * @param record The record to be inserted
          */
         $scope.insertRecord = function (record) {
-            if (record.regionName) {
+            if (record.name) {
                 HttpService.httpPost(self.baseServiceUrl, {
-                    "regionName": record.regionName
+                    "name": record.name
                 }).then(function (data) {
                     DialogService.toastrSuccess(self.moduleName, 'added');
                     getPaginatedInfo(paginationOptions.pageNumber, paginationOptions.pageSize);
@@ -217,8 +223,8 @@ angular.module('region').component('regionsList', {
          * @param record The record to be updated
          */
         $scope.updateRecord = function (record) {
-            HttpService.httpPut(self.baseServiceUrl + "/" + record.regionId, {
-                "regionName": record.regionName
+            HttpService.httpPut(self.baseServiceUrl + "/" + record.id, {
+                "name": record.name
             }).then(function (response) {
                 DialogService.toastrSuccess(self.moduleName, 'updated');
                 getPaginatedInfo(paginationOptions.pageNumber, paginationOptions.pageSize);
@@ -238,7 +244,7 @@ angular.module('region').component('regionsList', {
             //show confirmatin dialog
             DialogService.showConfirmDialog('Delete ' + self.moduleName, 'Are you sure to delete this record?', 'Record will be deleted permanently.')
                 .then(function (response) {
-                    HttpService.httpDelete(self.baseServiceUrl + "/" + info.regionId).then(function (data) {
+                    HttpService.httpDelete(self.baseServiceUrl + "/" + info.id).then(function (data) {
                         DialogService.toastrSuccess(self.moduleName, 'deleted');
                         var visibleRows = $scope.gridApi.core.getVisibleRows().length;
                         $log.log('Visible rows: ' + visibleRows);

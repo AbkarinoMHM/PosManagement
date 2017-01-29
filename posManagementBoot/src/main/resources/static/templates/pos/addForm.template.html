@@ -1,0 +1,211 @@
+<md-dialog aria-label="Add Region">
+    <form name="addForm" ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Add {{moduleName}}</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+
+            <div class="md-dialog-content">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Serial Number</label>
+                    <input type="text" name="name" ng-model="info.serialNumber" required>
+                    <div ng-messages="addForm.name.$error">
+                        <div ng-message="required">
+                            {{moduleName}} name is required!
+                        </div>
+                    </div>
+                </md-input-container>
+
+                <div class="row">
+                    <md-autocomplete name="typeAutoComplete" class="col-md-6" flex required
+                                     md-input-name="typeAutoComplete"
+                                     md-input-minlength="1"
+                                     md-input-maxlength="20"
+                                     md-no-cache="false"
+                                     md-selected-item="info.type"
+                                     md-search-text="ctrl.typeSearchText"
+                                     md-items="item in ctrl.types"
+                                     md-search-text-change="ctrl.getPosTypes(ctrl.typeSearchText)"
+                                     md-item-text="item.name"
+                                     md-require-match
+                                     md-floating-label="Type *">
+                        <md-item-template>
+                            <span md-highlight-text="typeSearchText">{{item.name}}</span>
+                        </md-item-template>
+                        <div ng-messages="addForm.typeAutoComplete.$error"
+                             ng-if="addForm.typeAutoComplete.$touched">
+                            <div ng-message="required">Type is required!</div>
+                            <div ng-message="md-require-match">Please select an existing type.</div>
+                            <div ng-message="minlength">Your entry is not long enough.</div>
+                            <div ng-message="maxlength">Your entry is too long.</div>
+                        </div>
+                    </md-autocomplete>
+                    <md-autocomplete name="vendorAutoComplete" class="col-md-6" flex required
+                                     md-input-name="vendorAutoComplete"
+                                     md-input-minlength="1"
+                                     md-input-maxlength="20"
+                                     md-no-cache="false"
+                                     md-selected-item="info.vendor"
+                                     md-search-text="ctrl.vendorSearchText"
+                                     md-items="item in ctrl.vendors"
+                                     md-search-text-change="ctrl.getPosVendors(ctrl.vendorSearchText)"
+                                     md-item-text="item.name"
+                                     md-require-match
+                                     md-floating-label="Vendor *">
+                        <md-item-template>
+                            <span md-highlight-text="vendorSearchText">{{item.name}}</span>
+                        </md-item-template>
+                        <div ng-messages="addForm.vendorAutoComplete.$error"
+                             ng-if="addForm.vendorAutoComplete.$touched">
+                            <div ng-message="required">Area is required!</div>
+                            <div ng-message="md-require-match">Please select an existing area.</div>
+                            <div ng-message="minlength">Your entry is not long enough.</div>
+                            <div ng-message="maxlength">Your entry is too long.</div>
+                        </div>
+                    </md-autocomplete>
+                </div>
+                <div class="row">
+                    <md-autocomplete name="projectAutoComplete" class="col-md-6" flex required
+                                     md-input-name="projectAutoComplete"
+                                     md-input-minlength="1"
+                                     md-input-maxlength="20"
+                                     md-no-cache="false"
+                                     md-selected-item="info.project"
+                                     md-search-text="ctrl.projectSearchText"
+                                     md-items="item in ctrl.projects"
+                                     md-search-text-change="ctrl.getProjects(ctrl.projectSearchText)"
+                                     md-item-text="item.name"
+                                     md-require-match
+                                     md-floating-label="Project *">
+                        <md-item-template>
+                            <span md-highlight-text="projectSearchText">{{item.name}}</span>
+                        </md-item-template>
+                        <div ng-messages="addForm.projectAutoComplete.$error"
+                             ng-if="addForm.projectAutoComplete.$touched">
+                            <div ng-message="required">Project is required!</div>
+                            <div ng-message="md-require-match">Please select an existing project.</div>
+                            <div ng-message="minlength">Your entry is not long enough.</div>
+                            <div ng-message="maxlength">Your entry is too long.</div>
+                        </div>
+                    </md-autocomplete>
+                    <md-autocomplete name="branchAutoComplete" class="col-md-6" flex required
+                                     md-input-name="branchAutoComplete"
+                                     md-input-minlength="1"
+                                     md-input-maxlength="20"
+                                     md-no-cache="false"
+                                     md-selected-item="info.vendorBranch"
+                                     md-search-text="ctrl.branchSearchText"
+                                     md-items="item in ctrl.branches"
+                                     md-search-text-change="ctrl.getVendorBranches(ctrl.branchSearchText)"
+                                     md-item-text="item.name"
+                                     md-require-match
+                                     md-floating-label="Branch *">
+                        <md-item-template>
+                            <span md-highlight-text="branchSearchText">{{item.name}}</span>
+                        </md-item-template>
+                        <div ng-messages="addForm.branchAutoComplete.$error"
+                             ng-if="addForm.branchAutoComplete.$touched">
+                            <div ng-message="required">Area is required!</div>
+                            <div ng-message="md-require-match">Please select an existing area.</div>
+                            <div ng-message="minlength">Your entry is not long enough.</div>
+                            <div ng-message="maxlength">Your entry is too long.</div>
+                        </div>
+                    </md-autocomplete>
+                </div>
+                <div class="row">
+                    <div class="md-dialog-content" class="col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Node ID</label>
+                            <input type="text" name="node" ng-model="info.node" required>
+                            <div ng-messages="addForm.node.$error">
+                                <div ng-message="required">
+                                    Node ID is required!
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <div class="md-dialog-content" class="col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Terminal Number</label>
+                            <input type="text" name="terminal" ng-model="info.terminal" required>
+                            <div ng-messages="addForm.node.$error">
+                                <div ng-message="required">
+                                    Terminal number is required!
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="md-dialog-content" class="col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Model</label>
+                            <input type="text" name="model" ng-model="info.model">
+                        </md-input-container>
+                    </div>
+                    <div class="md-dialog-content" class="col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Made</label>
+                            <input type="text" name="made" ng-model="info.made">
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="md-dialog-content" class="col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Part Number</label>
+                            <input type="text" name="partNumber" ng-model="info.partNumber">
+                        </md-input-container>
+                    </div>
+                    <div class="md-dialog-content" class="col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Batch Number</label>
+                            <input type="text" name="batchNumber" ng-model="info.batchNumber">
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="md-dialog-content" class="col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>File Number</label>
+                            <input type="text" name="file" ng-model="info.file">
+                        </md-input-container>
+                    </div>
+                    <div class="md-dialog-content" class="col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Tender</label>
+                            <input type="text" name="tender" ng-model="info.tender">
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div class="md-dialog-content">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Other Features</label>
+                        <input type="text" name="otherFeatures" ng-model="info.otherFeatures">
+                    </md-input-container>
+                </div>
+                <div class="md-dialog-content">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Remarks</label>
+                        <input type="text" name="remarks" ng-model="info.remarks">
+                    </md-input-container>
+                </div>
+            </div>
+
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button type="submit" ng-click="insertRecord(info)">
+                Add
+            </md-button>
+            <md-button ng-click="cancel()">
+                Cancel
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

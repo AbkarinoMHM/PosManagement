@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="css/material.css">
 
 
+
 </head>
 <body>
 <nav ng-cloak class="ng-cloak navbar navbar-default" ng-controller="mainController" ng-show="globals.currentUser">
@@ -40,11 +41,11 @@
                    aria-expanded="false"><i class="fa fa-briefcase" aria-hidden="true"></i> Products <span
                         class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="#!"><i class="fa fa-credit-card" aria-hidden="true"></i> Point Of Sale</a></li>
-                    <li><a href="#!"><i class="fa fa-microchip" aria-hidden="true"></i> Sim Cards</a></li>
-                    <li><a href="#!"><i class="fa fa-circle-o" aria-hidden="true"></i> Rolls</a></li>
-                    <li><a href="#!"><i class="fa fa-desktop" aria-hidden="true"></i> Items</a></li>
-                    <li><a href="#!"><i class="fa fa-retweet" aria-hidden="true"></i> Spare Parts</a></li>
+                    <li><a href="#!/pos"><i class="fa fa-credit-card" aria-hidden="true"></i> Point Of Sale</a></li>
+                    <li><a href="#!/sim"><i class="fa fa-microchip" aria-hidden="true"></i> Sim Cards</a></li>
+                    <li><a href="#!/roll"><i class="fa fa-circle-o" aria-hidden="true"></i> Rolls</a></li>
+                    <li><a href="#!/item"><i class="fa fa-desktop" aria-hidden="true"></i> Items</a></li>
+                    <li><a href="#!/sparePart"><i class="fa fa-retweet" aria-hidden="true"></i> Spare Parts</a></li>
                 </ul>
             </li>
             <li class="dropdown">
@@ -55,6 +56,9 @@
                     <li><a href="#!/projects"><i class="fa fa-product-hunt" aria-hidden="true"></i> Projects</a></li>
                     <li><a href="#!/regions"><i class="fa fa-location-arrow" aria-hidden="true"></i> Regions</a></li>
                     <li><a href="#!/areas"><i class="fa fa-map-marker" aria-hidden="true"></i> Areas</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#!/posType"><i class="fa fa-microchip" aria-hidden="true"></i> POS Types</a></li>
+                    <li><a href="#!/posVendor"><i class="fa fa-address-card" aria-hidden="true"></i> POS Vendors</a></li>
                 </ul>
             </li>
             <li class="dropdown">
@@ -62,11 +66,11 @@
                    aria-expanded="false"><i class="fa fa-university " aria-hidden="true"></i> Locations <span
                         class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="#!"><i class="fa fa-building" aria-hidden="true"></i> {{globals.customerName}} Branches</a>
+                    <li><a href="#!/merchantBranch"><i class="fa fa-building" aria-hidden="true"></i> {{globals.customerName}} Branches</a>
                     </li>
-                    <li><a href="#!"><i class="fa fa-hospital-o" aria-hidden="true"></i> {{globals.vendorName}} Branches</a>
+                    <li><a href="#!/vendorBranch"><i class="fa fa-hospital-o" aria-hidden="true"></i> {{globals.vendorName}} Branches</a>
                     </li>
-                    <li><a href="#!"><i class="fa fa-wrench" aria-hidden="true"></i> Service Centers</a></li>
+                    <li><a href="#!/serviceCenter"><i class="fa fa-wrench" aria-hidden="true"></i> Service Centers</a></li>
                 </ul>
             </li>
             <li class="dropdown">
@@ -75,7 +79,7 @@
                         class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><a href="#!/users"><i class="fa fa-users" aria-hidden="true"></i> Users</a></li>
-                    <li><a href="#!/"><i class="fa fa-male" aria-hidden="true"></i> Technicians</a></li>
+                    <li><a href="#!/technician"><i class="fa fa-male" aria-hidden="true"></i> Technicians</a></li>
                     <li><a href="#!/"><i class="fa fa-unlock-alt" aria-hidden="true"></i> Roles and Privileges</a></li>
                 </ul>
             </li>
@@ -129,6 +133,8 @@
 <script src="https://code.angularjs.org/1.5.8/angular-sanitize.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/3.2.9/ui-grid.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.2.0/ui-bootstrap-tpls.min.js"></script>
+<script src="http://ui-grid.info/docs/grunt-scripts/csv.js"></script>
+<script src="http://ui-grid.info/docs/grunt-scripts/pdfmake.js"></script>
 <!--toastr-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <!-- Include modules and components -->
@@ -152,5 +158,29 @@
 <!--user module-->
 <script src="js/user/user.module.js"></script>
 <script src="js/user/user.component.js"></script>
+<!--area module-->
+<script src="js/area/area.module.js"></script>
+<script src="js/area/area.component.js"></script>
+<!--merchantBranch module-->
+<script src="js/merchantBranch/merchantBranch.module.js"></script>
+<script src="js/merchantBranch/merchantBranch.component.js"></script>
+<!--vendorBranch module-->
+<script src="js/vendorBranch/vendorBranch.module.js"></script>
+<script src="js/vendorBranch/vendorBranch.component.js"></script>
+<!--serviceCenter module-->
+<script src="js/serviceCenter/serviceCenter.module.js"></script>
+<script src="js/serviceCenter/serviceCenter.component.js"></script>
+<!--technician module-->
+<script src="js/technician/technician.module.js"></script>
+<script src="js/technician/technician.component.js"></script>
+<!--pos type module-->
+<script src="js/posType/posType.module.js"></script>
+<script src="js/posType/posType.component.js"></script>
+<!--pos vendor module-->
+<script src="js/posVendor/posVendor.module.js"></script>
+<script src="js/posVendor/posVendor.component.js"></script>
+<!--pos module-->
+<script src="js/pos/pos.module.js"></script>
+<script src="js/pos/pos.component.js"></script>
 </body>
 </html>

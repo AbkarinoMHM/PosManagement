@@ -3,10 +3,10 @@
 // Register `project` component, along with its associated controller and template
 angular.module('user').component('usersList', {
     templateUrl: 'templates/common/gridWithFilterAndActions.template.html',
-    controller: function projectController($scope, $log, $mdBottomSheet, HttpService,$rootScope,
+    controller: function projectController($scope, $log, $mdBottomSheet, HttpService, $rootScope,
                                            DialogService, ButtonsSheetService, CommonService) {
         /*
-        Initialization section
+         Initialization section
          */
         //component general settings
         var self = this;
@@ -44,7 +44,7 @@ angular.module('user').component('usersList', {
          * Set grid options
          */
         $scope.gridOptions = {
-            paginationPageSizes: [5, 10, 20, 50, 100],
+            paginationPageSizes: [5, 10, 20, 50, 100,200],
             enableColumnMenus: false,
             useExternalPagination: true,
             enableSorting: true,
@@ -55,17 +55,24 @@ angular.module('user').component('usersList', {
             rowHeight: 30,
             multiSelect: true,
             paginationPageSize: paginationOptions.pageSize,
+            exporterCsvFilename: self.moduleName + '.csv',
+            exporterMenuPdf: false,
+            exporterIsExcelCompatible: true,
             columnDefs: [
-                { name: 'userId', displayName: "ID", pinnedLeft:true },
-                { name: 'userFullName', displayName: "Full Name" },
-                { name: 'userEmail' , displayName: "Email Address"},
-                { name: 'userAddress' , displayName: "Address"},
-                { name: 'userMobile' , displayName: "Mobile"},
-                { name: 'userIsCustomer' , displayName: "Is Customer User",
-                    cellTemplate:'<i ng-if="row.entity[col.field]" class="fa fa-check" aria-hidden="true" title="{{grid.appScope.globals.customerName}} User"></i><i ng-if="!row.entity[col.field]" class="fa fa-minus" aria-hidden="true" title="{{grid.appScope.globals.vendorName}} User"></i>'},
-                { name: 'Edit', maxWidth:50, displayName: "" , pinnedRight:true, enableSorting: false,
-                    enableCellEdit: false,enableFiltering: false,  enableColumnMenus:false,
-                    cellTemplate: '<div><a href="" ng-click="grid.appScope.showEditForm(row.entity)" title="Edit"><span class="glyphicon glyphicon-edit"></span></a><a href="" ng-click="grid.appScope.deleteInfo(row.entity)" title="Delete"><span class="glyphicon glyphicon-trash"></span></a></div>'}
+                {name: 'userId', displayName: "ID", pinnedLeft: true},
+                {name: 'userFullName', displayName: "Full Name"},
+                {name: 'userEmail', displayName: "Email Address"},
+                {name: 'userAddress', displayName: "Address"},
+                {name: 'userMobile', displayName: "Mobile"},
+                {
+                    name: 'userIsCustomer', displayName: "Is Customer User",
+                    cellTemplate: '<i ng-if="row.entity[col.field]" class="fa fa-check" aria-hidden="true" title="{{grid.appScope.globals.customerName}} User"></i><i ng-if="!row.entity[col.field]" class="fa fa-minus" aria-hidden="true" title="{{grid.appScope.globals.vendorName}} User"></i>'
+                },
+                {
+                    name: 'Edit', maxWidth: 50, displayName: "", pinnedRight: true, enableSorting: false,
+                    enableCellEdit: false, enableFiltering: false, enableColumnMenus: false,
+                    cellTemplate: '<div><a href="" ng-click="grid.appScope.showEditForm(row.entity)" title="Edit"><span class="glyphicon glyphicon-edit"></span></a><a href="" ng-click="grid.appScope.deleteInfo(row.entity)" title="Delete"><span class="glyphicon glyphicon-trash"></span></a></div>'
+                }
 
             ],
             onRegisterApi: function (gridApi) {
@@ -98,29 +105,11 @@ angular.module('user').component('usersList', {
          Filtration section
          */
         /**
-         * Filter is added
+         * Filter is changed
          * @param chip
          */
-        $scope.filterAdded = function (chip) {
-            $log.log("Chip:");
-            $log.log(chip);
-            $log.log("Tags:");
-            $log.log($scope.searchTags);
+        $scope.filterChanged = function (chip) {
             getPaginatedInfo(paginationOptions.pageNumber, paginationOptions.pageSize);
-
-        };
-
-        /**
-         * Filter is removed
-         * @param chip
-         */
-        $scope.filterRemoved = function (chip) {
-            $log.log("Chip:");
-            $log.log(chip);
-            $log.log("Tags:");
-            $log.log($scope.searchTags);
-            getPaginatedInfo(paginationOptions.pageNumber, paginationOptions.pageSize);
-
         };
         /**************************************************************************************************************/
         /*
@@ -202,26 +191,41 @@ angular.module('user').component('usersList', {
         }
 
         /**
+         * Validates password
+         * @param record user record
+         * @returns {boolean} true is password is equal to confirm password
+         */
+        $scope.validatePassword = function (record) {
+            if (record.userPassword != record.userConfirmPassword) {
+                $scope.addForm.confirmPassword.$setValidity("compareTo", false);
+                $scope.addForm.confirmPassword.$error.compareTo = true;
+                return false;
+            } else {
+                $scope.addForm.confirmPassword.$setValidity("compareTo", true);
+                $scope.addForm.confirmPassword.$error.compareTo = false;
+                return true;
+            }
+
+        }
+        /**
          * Insert a new record into DB
          * @param record The record to be inserted
          */
         $scope.insertRecord = function (record) {
             if (record.userFullName
-            && record.userEmail
-            && record.userPassword
-            && record.userConfirmPassword) {
-                if(record.userPassword != record.userConfirmPassword){
-                    $scope.addForm.confirmPassword.$setValidity("compareTo",false);
-                    $scope.addForm.confirmPassword.$error.compareTo = true;
+                && record.userEmail
+                && record.userPassword
+                && record.userConfirmPassword) {
+                if (! $scope.validatePassword(record)) {
                     return;
                 }
                 HttpService.httpPost(self.baseServiceUrl, {
                     "userFullName": record.userFullName,
-                    "userEmail":record.userEmail,
-                    "userAddress":record.userAddress,
-                    "userPassword":record.userPassword,
-                    "userMobile":record.userMobile,
-                    "userIsCustomer":record.userIsCustomer
+                    "userEmail": record.userEmail,
+                    "userAddress": record.userAddress,
+                    "userPassword": record.userPassword,
+                    "userMobile": record.userMobile,
+                    "userIsCustomer": record.userIsCustomer
                 }).then(function (data) {
                     DialogService.toastrSuccess(self.moduleName, 'added');
                     getPaginatedInfo(paginationOptions.pageNumber, paginationOptions.pageSize);
@@ -240,10 +244,9 @@ angular.module('user').component('usersList', {
         $scope.updateRecord = function (record) {
             HttpService.httpPut(self.baseServiceUrl + "/" + record.userId, {
                 "userFullName": record.userFullName,
-                "userEmail":record.userEmail,
-                "userAddress":record.userAddress,
-                "userMobile":record.userMobile,
-                "userIsCustomer":record.userIsCustomer
+                "userAddress": record.userAddress,
+                "userMobile": record.userMobile,
+                "userIsCustomer": record.userIsCustomer
             }).then(function (response) {
                 DialogService.toastrSuccess(self.moduleName, 'updated');
                 getPaginatedInfo(paginationOptions.pageNumber, paginationOptions.pageSize);

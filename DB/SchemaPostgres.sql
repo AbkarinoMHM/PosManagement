@@ -1,3 +1,48 @@
+/*20161206*/
+CREATE SEQUENCE public.service_center_service_center_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+	
+CREATE SEQUENCE public.pos_vendor_pos_vendor_id_seq
+	INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+	
+CREATE SEQUENCE public.pos_pos_id_seq
+	INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+/*20161130*/
+CREATE SEQUENCE public.vendor_branch_vendor_branch_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+/*20161128*/
+CREATE SEQUENCE public.merchant_branch_merchant_branch_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;	
+	
+/*20161128*/
+CREATE SEQUENCE public.area_area_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+	
 CREATE SEQUENCE public.user_user_id_seq
     INCREMENT 1
     START 1
@@ -5,21 +50,7 @@ CREATE SEQUENCE public.user_user_id_seq
     MAXVALUE 9223372036854775807
     CACHE 1;
 
-CREATE SEQUENCE public.poscondition_pos_condition_id_seq
-    INCREMENT 1
-    START 1
-    MINVALUE 1
-    MAXVALUE 9223372036854775807
-    CACHE 1;
-
-CREATE SEQUENCE public.posstatus_pos_status_id_seq
-    INCREMENT 1
-    START 1
-    MINVALUE 1
-    MAXVALUE 9223372036854775807
-    CACHE 1;
-
- CREATE SEQUENCE public.postype_pos_type_id_seq
+CREATE SEQUENCE public.pos_type_pos_type_id_seq
     INCREMENT 1
     START 1
     MINVALUE 1
@@ -102,7 +133,7 @@ TABLESPACE pg_default;
 
 CREATE TABLE public.area
 (
-    area_id bigint NOT NULL,
+    area_id bigint NOT NULL DEFAULT nextval('area_area_id_seq'::regclass),
     area_name character varying(50)  NOT NULL,
     region_id bigint NOT NULL,
     CONSTRAINT area_pkey PRIMARY KEY (area_id),
@@ -156,21 +187,16 @@ WITH (
 TABLESPACE pg_default;
 
 
-CREATE TABLE public.merchantbranch
+CREATE TABLE public.merchant_branch
 (
     merchant_branch_id bigint NOT NULL,
-    merchant_id bigint NOT NULL,
     merchant_branch_name character varying(50) ,
     merchant_branch_address character varying(100) ,
     area_id bigint NOT NULL,
     merchant_branch_notes character varying(100) ,
-    CONSTRAINT merchantbranch_pkey PRIMARY KEY (merchant_branch_id),
-    CONSTRAINT merchantbranch_area_id_fkey FOREIGN KEY (area_id)
+    CONSTRAINT merchant_branch_pkey PRIMARY KEY (merchant_branch_id),
+    CONSTRAINT merchant_branch_area_id_fkey FOREIGN KEY (area_id)
         REFERENCES public.area (area_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT merchantbranch_merchant_id_fkey FOREIGN KEY (merchant_id)
-        REFERENCES public.merchant (merchant_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
@@ -193,15 +219,15 @@ WITH (
 TABLESPACE pg_default;
 
 
-CREATE TABLE public.ebebranch
+CREATE TABLE public.vendor_branch
 (
-    ebe_branch_id bigint NOT NULL,
-    ebe_branch_name character varying(50) ,
-    ebe_branch_address character varying(100) ,
-    ebe_branch_tel character varying(50) ,
+    vendor_branch_id bigint NOT NULL,
+    vendor_branch_name character varying(50) ,
+    vendor_branch_address character varying(100) ,
+    vendor_branch_tel character varying(50) ,
     area_id bigint NOT NULL,
-    CONSTRAINT ebebranch_pkey PRIMARY KEY (ebe_branch_id),
-    CONSTRAINT ebebranch_area_id_fkey FOREIGN KEY (area_id)
+    CONSTRAINT vendor_branch_pkey PRIMARY KEY (vendor_branch_id),
+    CONSTRAINT vendor_branch_area_id_fkey FOREIGN KEY (area_id)
         REFERENCES public.area (area_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
@@ -212,15 +238,15 @@ WITH (
 TABLESPACE pg_default;
 
 
-CREATE TABLE public.servicecenter
+CREATE TABLE public.service_center
 (
     service_center_id bigint NOT NULL,
     service_center_name character varying(50)  NOT NULL,
-    service_center_address text ,
+    service_center_address character varying(100) ,
     service_center_tel character varying(15) ,
     area_id bigint NOT NULL,
-    CONSTRAINT servicecenter_pkey PRIMARY KEY (service_center_id),
-    CONSTRAINT servicecenter_area_id_fkey FOREIGN KEY (area_id)
+    CONSTRAINT service_center_pkey PRIMARY KEY (service_center_id),
+    CONSTRAINT service_center_area_id_fkey FOREIGN KEY (area_id)
         REFERENCES public.area (area_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
@@ -269,10 +295,10 @@ TABLESPACE pg_default;
 CREATE TABLE public.userbranch
 (
     user_id bigint NOT NULL,
-    ebe_branch_id bigint NOT NULL,
-    CONSTRAINT userbranch_pkey PRIMARY KEY (ebe_branch_id, user_id),
-    CONSTRAINT userbranch_ebe_branch_id_fkey FOREIGN KEY (ebe_branch_id)
-        REFERENCES public.ebebranch (ebe_branch_id) MATCH SIMPLE
+    vendor_branch_id bigint NOT NULL,
+    CONSTRAINT userbranch_pkey PRIMARY KEY (vendor_branch_id, user_id),
+    CONSTRAINT userbranch_vendor_branch_id_fkey FOREIGN KEY (vendor_branch_id)
+        REFERENCES public.vendor_branch (vendor_branch_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT userbranch_user_id_fkey FOREIGN KEY (user_id)
@@ -285,8 +311,8 @@ WITH (
 )
 TABLESPACE pg_default;
 
-/*DROP TABLE IF EXISTS `operatorposstatus`;
-CREATE TABLE `operatorposstatus` (
+/*DROP TABLE IF EXISTS `operatorpos_status`;
+CREATE TABLE `operatorpos_status` (
   `operator_id` bigint(20) NOT NULL,
   `POSpos_status_id` int(11) NOT NULL,
   `IsEnabled` tinyint(1) DEFAULT NULL,
@@ -313,11 +339,11 @@ CREATE TABLE public.sim
     sim_id integer NOT NULL DEFAULT nextval('sim_sim_id_seq'::regclass),
     sim_number character varying(50)  NOT NULL,
     sim_vendor_id integer NOT NULL,
-    ebe_branch_id bigint NOT NULL,
+    vendor_branch_id bigint NOT NULL,
     sim_is_damage smallint NOT NULL DEFAULT 0,
     CONSTRAINT sim_pkey PRIMARY KEY (sim_id),
-    CONSTRAINT sim_ebe_branch_id_fkey FOREIGN KEY (ebe_branch_id)
-        REFERENCES public.ebebranch (ebe_branch_id) MATCH SIMPLE
+    CONSTRAINT sim_vendor_branch_id_fkey FOREIGN KEY (vendor_branch_id)
+        REFERENCES public.vendor_branch (vendor_branch_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT sim_sim_vendor_id_fkey FOREIGN KEY (sim_vendor_id)
@@ -331,11 +357,11 @@ WITH (
 TABLESPACE pg_default;
 
 
-CREATE TABLE public.posstatus
+CREATE TABLE public.pos_status
 (
-    pos_status_id integer NOT NULL DEFAULT nextval('posstatus_pos_status_id_seq'::regclass),
+    pos_status_id integer NOT NULL,
     pos_status_name character varying  NOT NULL,
-    CONSTRAINT posstatus_pkey PRIMARY KEY (pos_status_id)
+    CONSTRAINT pos_status_pkey PRIMARY KEY (pos_status_id)
 )
 WITH (
     OIDS = FALSE
@@ -343,11 +369,22 @@ WITH (
 TABLESPACE pg_default;
 
 
-CREATE TABLE public.postype
+CREATE TABLE public.pos_type
 (
-    pos_type_id integer NOT NULL DEFAULT nextval('postype_pos_type_id_seq'::regclass),
+    pos_type_id integer NOT NULL DEFAULT nextval('pos_type_pos_type_id_seq'::regclass),
     pos_type_name character varying  NOT NULL,
-    CONSTRAINT postype_pkey PRIMARY KEY (pos_type_id)
+    CONSTRAINT pos_type_pkey PRIMARY KEY (pos_type_id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+CREATE TABLE public.pos_vendor
+(
+    pos_vendor_id integer NOT NULL DEFAULT nextval('pos_vendor_pos_vendor_id_seq'::regclass),
+    pos_vendor_name character varying  NOT NULL,
+    CONSTRAINT pos_vendor_pkey PRIMARY KEY (pos_vendor_id)
 )
 WITH (
     OIDS = FALSE
@@ -355,11 +392,11 @@ WITH (
 TABLESPACE pg_default;
 
 
-CREATE TABLE public.poscondition
+CREATE TABLE public.pos_condition
 (
-    pos_condition_id integer NOT NULL DEFAULT nextval('poscondition_pos_condition_id_seq'::regclass),
+    pos_condition_id integer NOT NULL,
     pos_condition_name character varying  NOT NULL,
-    CONSTRAINT poscondition_pkey PRIMARY KEY (pos_condition_id)
+    CONSTRAINT pos_condition_pkey PRIMARY KEY (pos_condition_id)
 )
 WITH (
     OIDS = FALSE
@@ -368,9 +405,9 @@ TABLESPACE pg_default;
 
 CREATE TABLE public.pos
 (
-    pos_id bigint NOT NULL,
+    pos_id bigint NOT NULL DEFAULT nextval('pos_pos_id_seq'::regclass),
     pos_serial_number character varying(50)  NOT NULL,
-    pos_vendor character varying(100) ,
+    pos_vendor_id integer NOT NULL ,
     pos_model character varying(100) ,
     pos_type_id integer NOT NULL,
     pos_made character varying(100) ,
@@ -378,36 +415,34 @@ CREATE TABLE public.pos
     pos_other_features character varying(100) ,
     pos_batch_number character varying(100) ,
     pos_condition_id integer NOT NULL,
-    pos_remarks character varying(100) ,
+    pos_remarks character varying(255) ,
     pos_status_id integer NOT NULL,
-    merchant_branch_id bigint,
     pos_file_id bigint,
     pos_terminal_id character varying(50) ,
     pos_node_id character varying(50) ,
-    pos_notes character varying(255) ,
     pos_tender_num character varying(50) ,
     project_id bigint NOT NULL,
-    ebe_branch_id bigint NOT NULL,
+    vendor_branch_id bigint NOT NULL,
     "Timestamp" timestamp without time zone NOT NULL,
     CONSTRAINT pos_pkey PRIMARY KEY (pos_id),
-    CONSTRAINT pos_ebe_branch_id_fkey FOREIGN KEY (ebe_branch_id)
-        REFERENCES public.ebebranch (ebe_branch_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT pos_merchant_branch_id_fkey FOREIGN KEY (merchant_branch_id)
-        REFERENCES public.merchantbranch (merchant_branch_id) MATCH SIMPLE
+    CONSTRAINT pos_vendor_branch_id_fkey FOREIGN KEY (vendor_branch_id)
+        REFERENCES public.vendor_branch (vendor_branch_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT pos_pos_condition_id_fkey FOREIGN KEY (pos_condition_id)
-        REFERENCES public.poscondition (pos_condition_id) MATCH SIMPLE
+        REFERENCES public.pos_condition (pos_condition_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT pos_pos_status_id_fkey FOREIGN KEY (pos_status_id)
-        REFERENCES public.posstatus (pos_status_id) MATCH SIMPLE
+        REFERENCES public.pos_status (pos_status_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT pos_pos_type_id_fkey FOREIGN KEY (pos_type_id)
-        REFERENCES public.postype (pos_type_id) MATCH SIMPLE
+        REFERENCES public.pos_type (pos_type_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+	CONSTRAINT pos_pos_vendor_id_fkey FOREIGN KEY (pos_vendor_id)
+        REFERENCES public.pos_vendor (pos_vendor_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT pos_project_id_fkey FOREIGN KEY (project_id)
@@ -459,15 +494,15 @@ CREATE TABLE public.roll
     roll_size_id integer NOT NULL,
     roll_quantaty integer NOT NULL,
     roll_direction integer NOT NULL,
-    ebe_branch_id bigint NOT NULL,
+    vendor_branch_id bigint NOT NULL,
     merchant_branch_id bigint NOT NULL,
     CONSTRAINT roll_pkey PRIMARY KEY (roll_id),
-    CONSTRAINT roll_ebe_branch_id_fkey FOREIGN KEY (ebe_branch_id)
-        REFERENCES public.ebebranch (ebe_branch_id) MATCH SIMPLE
+    CONSTRAINT roll_vendor_branch_id_fkey FOREIGN KEY (vendor_branch_id)
+        REFERENCES public.vendor_branch (vendor_branch_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT roll_merchant_branch_id_fkey FOREIGN KEY (merchant_branch_id)
-        REFERENCES public.merchantbranch (merchant_branch_id) MATCH SIMPLE
+        REFERENCES public.merchant_branch (merchant_branch_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT roll_roll_size_id_fkey FOREIGN KEY (roll_size_id)
@@ -500,14 +535,14 @@ CREATE TABLE public.item
     item_type_id integer NOT NULL,
     item_serial_number character varying(50) ,
     item_description character varying(255) ,
-    ebe_branch_id bigint NOT NULL,
+    vendor_branch_id bigint NOT NULL,
     "TimeStamp" timestamp without time zone,
     item_made character varying(50) ,
     item_model character varying(50) ,
     project_id bigint,
     CONSTRAINT item_pkey PRIMARY KEY (item_id),
-    CONSTRAINT item_ebe_branch_id_fkey FOREIGN KEY (ebe_branch_id)
-        REFERENCES public.ebebranch (ebe_branch_id) MATCH SIMPLE
+    CONSTRAINT item_vendor_branch_id_fkey FOREIGN KEY (vendor_branch_id)
+        REFERENCES public.vendor_branch (vendor_branch_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT item_item_type_id_fkey FOREIGN KEY (item_type_id)
