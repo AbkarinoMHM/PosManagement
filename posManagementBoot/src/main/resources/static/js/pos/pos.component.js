@@ -18,6 +18,7 @@ angular.module('pos').component('posList', {
         self.posVendorServiceUrl = 'services/posvendor';
         self.projectsServiceUrl = 'services/project';
         self.vendorBranchServiceUrl = 'services/vendorbranch';
+        self.posConditionServiceUrl = 'services/poscondition';
 
         //types
         self.types = null;
@@ -35,6 +36,9 @@ angular.module('pos').component('posList', {
         self.branches = null;
         self.branchSearchText = null;
 
+        //condition
+        self.conditions = null;
+        self.conditionSearchText = null;
 
         //Paganation settings
         var paginationOptions = {
@@ -309,14 +313,44 @@ angular.module('pos').component('posList', {
             });
         }
 
+        self.getConditions = function (posConditionName) {
+            //self.typeSearchText = null;
+            HttpService.httpGet(self.posConditionServiceUrl + "?name=" + posConditionName).then(function (response) {
+                $log.log(response.data);
+                self.conditions = response.data;
+                return response.data;
+            }, function (response) {
+                DialogService.showHttpErrorDialog(response);
+                DialogService.toastrError('Pos Condition' + ' list', 'load');
+                return [];
+            });
+        }
+
         /**
          * Insert a new record into DB
          * @param record The record to be inserted
          */
         $scope.insertRecord = function (record) {
-            if (record.name) {
+            if (record.serialNumber && record.type && record.vendor && record.project && record.vendorBranch
+            && record.node && record.terminal) {
                 HttpService.httpPost(self.baseServiceUrl, {
-                    "name": record.name
+                    "serialNumber": record.serialNumber,
+                    "vendor": record.vendor,
+                    "model": record.model,
+                    "type": record.type,
+                    "made": record.made,
+                    "partNumber": record.partNumber,
+                    "otherFeatures": record.otherFeatures,
+                    "batchNumber": record.batchNumber,
+                    "condition": record.condition,
+                    "remarks": record.remarks,
+                    "status": record.status,
+                    "file": record.file,
+                    "terminal": record.terminal,
+                    "node": record.node,
+                    "tender": record.tender,
+                    "project": record.project,
+                    "vendorBranch": record.vendorBranch
                 }).then(function (data) {
                     DialogService.toastrSuccess($scope.moduleName, 'added');
                     getPaginatedInfo(paginationOptions.pageNumber, paginationOptions.pageSize);

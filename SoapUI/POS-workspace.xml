@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-workspace name="POS" soapui-version="5.3.0" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings/>
+  <con:project name="REST Project 1">C:/UBS/Dev/Omar/bitBucket/Omarsaad-posmanagement-08e5b16c3fa9/SoapUI/REST-Project-1-soapui-project.xml</con:project>
+  <con:collectInfoForSupport>false</con:collectInfoForSupport>
+</con:soapui-workspace>

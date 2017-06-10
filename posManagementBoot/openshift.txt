@@ -1,0 +1,6 @@
+WildFly 10 administrator added.  Please make note of these credentials:
+
+   Username: adminNwkr3eT
+   Password: SDe3SenDgrpa
+
+   run 'rhc port-forward posmanagementboot' to access the web admin area on port 9990.

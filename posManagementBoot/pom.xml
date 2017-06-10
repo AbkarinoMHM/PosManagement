@@ -84,16 +84,16 @@
             <plugin>
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
-                <version>1.1.0.Alpha11</version>
+                <version>1.1.0.Beta1</version>
             </plugin>
         </plugins>
     </build>
 
-    <distributionManagement>
-        <repository>
-            <id>internal.repo</id>
-            <name>Internal repo</name>
-            <url>file://C:\Users\saado\.m2\repository</url>
-        </repository>
-    </distributionManagement>
+    <!--<distributionManagement>-->
+        <!--<repository>-->
+            <!--<id>internal.repo</id>-->
+            <!--<name>Internal repo</name>-->
+            <!--<url>file://C:\Users\saado\.m2\repository</url>-->
+        <!--</repository>-->
+    <!--</distributionManagement>-->
 </project>
