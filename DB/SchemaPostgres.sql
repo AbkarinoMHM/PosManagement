@@ -361,6 +361,7 @@ CREATE TABLE public.pos_status
 (
     pos_status_id integer NOT NULL,
     pos_status_name character varying  NOT NULL,
+    pos_status_is_default boolean DEFAULT false,
     CONSTRAINT pos_status_pkey PRIMARY KEY (pos_status_id)
 )
 WITH (
@@ -421,9 +422,9 @@ CREATE TABLE public.pos
     pos_terminal_id character varying(50) ,
     pos_node_id character varying(50) ,
     pos_tender_num character varying(50) ,
-    project_id bigint NOT NULL,
-    vendor_branch_id bigint NOT NULL,
-    "Timestamp" timestamp without time zone NOT NULL,
+    pos_project_id bigint NOT NULL,
+    pos_vendor_branch_id bigint NOT NULL,
+    pos_timestamp timestamp without time zone NOT NULL,
     CONSTRAINT pos_pkey PRIMARY KEY (pos_id),
     CONSTRAINT pos_vendor_branch_id_fkey FOREIGN KEY (vendor_branch_id)
         REFERENCES public.vendor_branch (vendor_branch_id) MATCH SIMPLE

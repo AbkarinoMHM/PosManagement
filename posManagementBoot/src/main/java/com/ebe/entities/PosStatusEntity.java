@@ -13,6 +13,8 @@ public class PosStatusEntity {
     private Integer id;
     @Column(name = "pos_status_name", nullable = false)
     private String name;
+    @Column(name = "pos_status_is_default", nullable = false)
+    private boolean isDefault;
 
     public PosStatusEntity() {
     }

@@ -42,4 +42,21 @@ public class PosStatusController {
         return new ResponseEntity<>(posStatus, HttpStatus.OK);
 
     }
+
+    /**
+     * Find the default pos status
+     * @return The Pos status with status_isDefault = @isDefault
+     */
+    @RequestMapping(
+            value = "/Default",
+            method = RequestMethod.GET,
+            produces = {"application/json"}
+    )
+    public ResponseEntity<PosStatusEntity> findByIsDefault() {
+        List<PosStatusEntity> posStatus = this.posStatusRepository.findByIsDefault(true);
+        if (posStatus == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(posStatus.get(0), HttpStatus.OK);
+    }
 }
