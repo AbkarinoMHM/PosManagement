@@ -11,7 +11,9 @@
     <!--fontawesome-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <!--angularjs-->
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+    <link rel="stylesheet" href="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.0.6-master-3310aa9/angular-material.css
+
+">
     <!--ui grid-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/3.2.9/ui-grid.min.css">
     <!--googleFonts-->
@@ -23,7 +25,6 @@
     <link rel="stylesheet" type="text/css" href="css/app.css">
     <link rel="stylesheet" type="text/css" href="css/ui-grid.css">
     <link rel="stylesheet" href="css/material.css">
-
 
 
 </head>
@@ -58,7 +59,8 @@
                     <li><a href="#!/areas"><i class="fa fa-map-marker" aria-hidden="true"></i> Areas</a></li>
                     <li class="divider"></li>
                     <li><a href="#!/posType"><i class="fa fa-microchip" aria-hidden="true"></i> POS Types</a></li>
-                    <li><a href="#!/posVendor"><i class="fa fa-address-card" aria-hidden="true"></i> POS Vendors</a></li>
+                    <li><a href="#!/posVendor"><i class="fa fa-address-card" aria-hidden="true"></i> POS Vendors</a>
+                    </li>
                 </ul>
             </li>
             <li class="dropdown">
@@ -66,11 +68,14 @@
                    aria-expanded="false"><i class="fa fa-university " aria-hidden="true"></i> Locations <span
                         class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="#!/merchantBranch"><i class="fa fa-building" aria-hidden="true"></i> {{globals.customerName}} Branches</a>
+                    <li><a href="#!/merchantBranch"><i class="fa fa-building" aria-hidden="true"></i>
+                        {{globals.customerName}} Branches</a>
                     </li>
-                    <li><a href="#!/vendorBranch"><i class="fa fa-hospital-o" aria-hidden="true"></i> {{globals.vendorName}} Branches</a>
+                    <li><a href="#!/vendorBranch"><i class="fa fa-hospital-o" aria-hidden="true"></i>
+                        {{globals.vendorName}} Branches</a>
                     </li>
-                    <li><a href="#!/serviceCenter"><i class="fa fa-wrench" aria-hidden="true"></i> Service Centers</a></li>
+                    <li><a href="#!/serviceCenter"><i class="fa fa-wrench" aria-hidden="true"></i> Service Centers</a>
+                    </li>
                 </ul>
             </li>
             <li class="dropdown">
@@ -108,12 +113,12 @@
 
 <!--Main view-->
 
-    <div ng-view class="mainWrap"></div>
+<div ng-view class="mainWrap"></div>
 
 <!--<div id="footer">-->
-    <!--<div class="container">-->
-        <!--<p class="muted credit">This is a sticky footer</p>-->
-    <!--</div>-->
+<!--<div class="container">-->
+<!--<p class="muted credit">This is a sticky footer</p>-->
+<!--</div>-->
 <!--</div>-->
 
 <!--Includes-->
@@ -129,7 +134,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-messages.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-cookies.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+<script src="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.0.6-master-3310aa9/angular-material.js"></script>
 <script src="https://code.angularjs.org/1.5.8/angular-sanitize.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/3.2.9/ui-grid.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.2.0/ui-bootstrap-tpls.min.js"></script>

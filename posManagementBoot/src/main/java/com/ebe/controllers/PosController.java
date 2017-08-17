@@ -3,8 +3,10 @@ package com.ebe.controllers;
 import com.ebe.SearchSpecifications.GenericSpecification;
 import com.ebe.SearchSpecifications.GenericSpecificationsBuilder;
 import com.ebe.entities.PosEntity;
+import com.ebe.entities.PosStatusEntity;
 import com.ebe.repositories.MerchantBranchRepository;
 import com.ebe.repositories.PosRepository;
+import com.ebe.repositories.PosStatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +30,8 @@ import java.util.regex.Pattern;
 public class PosController {
     @Autowired
     private PosRepository repository;
+    @Autowired
+    private PosStatusRepository posStatusRepository;
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<PosEntity>> findAll(@RequestParam(value="search", defaultValue = "") String search) {
@@ -92,6 +96,9 @@ public class PosController {
             produces = {"application/json"}
     )
     public ResponseEntity<PosEntity> create(@RequestBody PosEntity newRecord, UriComponentsBuilder ucBuilder) {
+        //add the default pos status
+        List<PosStatusEntity> posStatus = this.posStatusRepository.findByIsDefault(true);
+        newRecord.setStatus(posStatus.get(0));
         this.repository.saveAndFlush(newRecord);
         PosEntity posEntity = this.repository.findOne(newRecord.getId());
         return new ResponseEntity<>(posEntity, HttpStatus.CREATED);

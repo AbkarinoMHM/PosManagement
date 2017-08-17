@@ -11,7 +11,7 @@
 
             <div class="md-dialog-content">
                 <md-input-container class="md-block" flex-gt-sm>
-                    <label>Serial Number *</label>
+                    <label>Serial Number</label>
                     <input type="text" name="serialNumber" ng-model="info.serialNumber" required>
                     <div ng-messages="addForm.name.$error">
                         <div ng-message="required">
@@ -21,7 +21,8 @@
                 </md-input-container>
 
                 <div class="row">
-                    <md-autocomplete name="typeAutoComplete" class="col-md-3" flex required
+
+                    <md-autocomplete class="col-md-3" name="typeAutoComplete" flex required
                                      md-input-name="typeAutoComplete"
                                      md-input-minlength="1"
                                      md-input-maxlength="20"
@@ -32,7 +33,7 @@
                                      md-search-text-change="ctrl.getPosTypes(ctrl.typeSearchText)"
                                      md-item-text="item.name"
                                      md-require-match
-                                     md-floating-label="Type *">
+                                     md-floating-label="Type">
                         <md-item-template>
                             <span md-highlight-text="typeSearchText">{{item.name}}</span>
                         </md-item-template>
@@ -44,9 +45,9 @@
                             <div ng-message="maxlength">Your entry is too long.</div>
                         </div>
                     </md-autocomplete>
-                    <md-autocomplete name="vendorAutoComplete" class="col-md-3" flex required
+                    <md-autocomplete class="col-md-3" name="vendorAutoComplete" flex required
                                      md-input-name="vendorAutoComplete"
-                                     md-input-minlength="1"
+                                     md-input-minlength="2"
                                      md-input-maxlength="20"
                                      md-no-cache="false"
                                      md-selected-item="info.vendor"
@@ -55,7 +56,7 @@
                                      md-search-text-change="ctrl.getPosVendors(ctrl.vendorSearchText)"
                                      md-item-text="item.name"
                                      md-require-match
-                                     md-floating-label="Vendor *">
+                                     md-floating-label="Vendor">
                         <md-item-template>
                             <span md-highlight-text="vendorSearchText">{{item.name}}</span>
                         </md-item-template>
@@ -78,7 +79,7 @@
                                      md-search-text-change="ctrl.getProjects(ctrl.projectSearchText)"
                                      md-item-text="item.name"
                                      md-require-match
-                                     md-floating-label="Project *">
+                                     md-floating-label="Project">
                         <md-item-template>
                             <span md-highlight-text="projectSearchText">{{item.name}}</span>
                         </md-item-template>
@@ -90,6 +91,7 @@
                             <div ng-message="maxlength">Your entry is too long.</div>
                         </div>
                     </md-autocomplete>
+
                     <md-autocomplete name="branchAutoComplete" class="col-md-3" flex required
                                      md-input-name="branchAutoComplete"
                                      md-input-minlength="1"
@@ -101,34 +103,38 @@
                                      md-search-text-change="ctrl.getVendorBranches(ctrl.branchSearchText)"
                                      md-item-text="item.name"
                                      md-require-match
-                                     md-floating-label="Branch *">
+                                     md-floating-label="Branch">
                         <md-item-template>
                             <span md-highlight-text="branchSearchText">{{item.name}}</span>
                         </md-item-template>
                         <div ng-messages="addForm.branchAutoComplete.$error"
-                             ng-if="addForm.branchAutoComplete.$touched">
+                             ng-if="addForm.vendorAutoComplete.$touched">
                             <div ng-message="required">Branch is required!</div>
                             <div ng-message="md-require-match">Please select an existing branch.</div>
                             <div ng-message="minlength">Your entry is not long enough.</div>
                             <div ng-message="maxlength">Your entry is too long.</div>
                         </div>
                     </md-autocomplete>
+
                 </div>
                 <div class="row">
                     <div class="md-dialog-content col-md-4">
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Condition *</label>
-                            <md-select ng-model="info.condition"
-                                       md-on-open="ctrl.getConditions('')" style="min-width: 200px;" required>
+                            <md-select name="conditionSelect" ng-model="info.condition"
+                                       md-on-open="ctrl.getConditions('')" flex required>
                                 <md-option ng-value="condition" ng-repeat="condition in ctrl.conditions">
                                     {{condition.name}}
                                 </md-option>
                             </md-select>
+                            <div ng-messages="addForm.conditionSelect.$error">
+                                <div ng-message="required">POS Condition is required!</div>
+                            </div>
                         </md-input-container>
                     </div>
                     <div class="md-dialog-content col-md-4">
                         <md-input-container class="md-block" flex-gt-sm>
-                            <label>Node ID *</label>
+                            <label>Node ID</label>
                             <input type="text" name="node" ng-model="info.node" required>
                             <div ng-messages="addForm.node.$error">
                                 <div ng-message="required">
@@ -139,7 +145,7 @@
                     </div>
                     <div class="md-dialog-content col-md-4">
                         <md-input-container class="md-block" flex-gt-sm>
-                            <label>Terminal Number *</label>
+                            <label>Terminal Number</label>
                             <input type="text" name="terminal" ng-model="info.terminal" required>
                             <div ng-messages="addForm.node.$error">
                                 <div ng-message="required">
