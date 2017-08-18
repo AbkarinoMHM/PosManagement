@@ -1,4 +1,10 @@
-/*20161206*/
+/* execute using sudo -u postgres psql -v ON_ERROR_STOP=1 -e -d NSGB < SchemaPostgres.sql*/
+
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO public;
+
 CREATE SEQUENCE public.service_center_service_center_id_seq
     INCREMENT 1
     START 1
@@ -426,7 +432,7 @@ CREATE TABLE public.pos
     pos_vendor_branch_id bigint NOT NULL,
     pos_timestamp timestamp without time zone NOT NULL,
     CONSTRAINT pos_pkey PRIMARY KEY (pos_id),
-    CONSTRAINT pos_vendor_branch_id_fkey FOREIGN KEY (vendor_branch_id)
+    CONSTRAINT pos_vendor_branch_id_fkey FOREIGN KEY (pos_vendor_branch_id)
         REFERENCES public.vendor_branch (vendor_branch_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
@@ -591,6 +597,34 @@ WITH (
     OIDS = FALSE
 )
 TABLESPACE pg_default;
+/****************************************************************/
+
+/*************************DATA***********************************/
+/********************* settings *********************/
+INSERT INTO public.setting(
+	setting_name, setting_value)
+	VALUES ('customerName', 'NSGB');
+	
+INSERT INTO public.setting(
+	setting_name, setting_value)
+	VALUES ('vendorName', 'EBE');
+	
+INSERT INTO public.setting(
+	setting_name, setting_value)
+	VALUES ('customerClass', 'A');
+
+/******************** Security ********************/
+INSERT INTO public.role(
+	role_id, role_name)
+	VALUES (1, 'ADMIN');
+
+INSERT INTO public.role(
+	role_id, role_name)
+	VALUES (2, 'SUPERUSER');
+
+INSERT INTO public.role(
+	role_id, role_name)
+	VALUES (3, 'USER');	
 /****************************************************************/
 
 /*DROP TABLE IF EXISTS `pc`;
