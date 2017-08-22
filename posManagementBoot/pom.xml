@@ -86,14 +86,116 @@
                 <artifactId>wildfly-maven-plugin</artifactId>
                 <version>1.1.0.Beta1</version>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>sql-maven-plugin</artifactId>
+                <version>1.5</version>
+                <dependencies>
+                    <!-- specify the dependent jdbc driver here -->
+                    <dependency>
+                        <groupId>postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>9.1-901.jdbc4</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <driver>org.postgresql.Driver</driver>
+                    <url>jdbc:postgresql://localhost:5432/postgres</url>
+                    <username>postgres</username>
+                    <password>sm194Tsv</password>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>disconnect-db</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <!-- need another database to drop the targeted one -->
+                            <url>jdbc:postgresql://localhost:5432/postgres</url>
+                            <sqlCommand>SELECT pg_terminate_backend(pg_stat_activity.pid)
+                                FROM pg_stat_activity
+                                WHERE datname = 'nsgb'
+                                AND pid &lt;&gt; pg_backend_pid();</sqlCommand>
+                            <autocommit>true</autocommit>
+                            <!-- ignore error when database is not avaiable -->
+                            <onError>continue</onError>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>drop-db-if-any</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <!-- need another database to drop the targeted one -->
+                            <url>jdbc:postgresql://localhost:5432/postgres</url>
+                            <sqlCommand>drop database nsgb</sqlCommand>
+                            <autocommit>true</autocommit>
+                            <!-- ignore error when database is not avaiable -->
+                            <onError>continue</onError>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>create-db</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <url>jdbc:postgresql://localhost:5432/postgres</url>
+                            <!-- no transaction -->
+                            <autocommit>true</autocommit>
+                            <sqlCommand>create database nsgb</sqlCommand>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>create-schema</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <driver>org.postgresql.Driver</driver>
+                            <url>jdbc:postgresql://localhost:5432/nsgb</url>
+                            <username>postgres</username>
+                            <password>sm194Tsv</password>
+                            <autocommit>true</autocommit>
+                            <srcFiles>
+                                <srcFile>src/DB/SchemaPostgres.sql</srcFile>
+                            </srcFiles>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>master-data</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <driver>org.postgresql.Driver</driver>
+                            <url>jdbc:postgresql://localhost:5432/nsgb</url>
+                            <username>postgres</username>
+                            <password>sm194Tsv</password>
+                            <autocommit>true</autocommit>
+                            <srcFiles>
+                                <srcFile>src/DB/data.sql</srcFile>
+                            </srcFiles>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
     <!--<distributionManagement>-->
-        <!--<repository>-->
-            <!--<id>internal.repo</id>-->
-            <!--<name>Internal repo</name>-->
-            <!--<url>file://C:\Users\saado\.m2\repository</url>-->
-        <!--</repository>-->
+    <!--<repository>-->
+    <!--<id>internal.repo</id>-->
+    <!--<name>Internal repo</name>-->
+    <!--<url>file://C:\Users\saado\.m2\repository</url>-->
+    <!--</repository>-->
     <!--</distributionManagement>-->
 </project>
