@@ -10,7 +10,7 @@
         <md-dialog-content>
             <div class="md-dialog-content">
                 <md-input-container class="md-block" flex-gt-sm>
-                    <label>Branch Name *</label>
+                    <label>Branch Name</label>
                     <input type="text" name="name" ng-model="info.name" required>
                     <div ng-messages="addForm.name.$error">
                         <div ng-message="required">
@@ -29,7 +29,7 @@
                 <div class="row">
                     <md-autocomplete name="regionAutoComplete" class="col-md-6" flex required
                                      md-input-name="regionAutoComplete"
-                                     md-input-minlength="1"
+                                     md-input-minlength="2"
                                      md-input-maxlength="20"
                                      md-no-cache="false"
                                      md-selected-item="selectedRegion"
@@ -38,7 +38,7 @@
                                      md-search-text-change="ctrl.getRegions(ctrl.regionSearchText)"
                                      md-item-text="item.name"
                                      md-require-match
-                                     md-floating-label="Region *">
+                                     md-floating-label="Region">
                         <md-item-template>
                             <span md-highlight-text="regionSearchText">{{item.name}}</span>
                         </md-item-template>
@@ -52,7 +52,7 @@
                     </md-autocomplete>
                     <md-autocomplete name="areaAutoComplete" class="col-md-6" flex required
                                      md-input-name="areaAutoComplete"
-                                     md-input-minlength="1"
+                                     md-input-minlength="2"
                                      md-input-maxlength="20"
                                      md-no-cache="false"
                                      md-selected-item="info.area"
@@ -61,7 +61,7 @@
                                      md-search-text-change="ctrl.getAreas(ctrl.areaSearchText)"
                                      md-item-text="item.name"
                                      md-require-match
-                                     md-floating-label="Area *">
+                                     md-floating-label="Area">
                         <md-item-template>
                             <span md-highlight-text="areaSearchText">{{item.name}}</span>
                         </md-item-template>

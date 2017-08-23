@@ -102,7 +102,7 @@
                                      md-items="item in ctrl.branches"
                                      md-search-text-change="ctrl.getVendorBranches(ctrl.branchSearchText)"
                                      md-item-text="item.name"
-                                     md-require-match
+                                     md-require-match="true"
                                      md-floating-label="Branch">
                         <md-item-template>
                             <span md-highlight-text="branchSearchText">{{item.name}}</span>

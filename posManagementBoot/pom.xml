@@ -107,7 +107,7 @@
                 <executions>
                     <execution>
                         <id>disconnect-db</id>
-                        <phase>install</phase>
+                        <!--<phase>install</phase>-->
                         <goals>
                             <goal>execute</goal>
                         </goals>
@@ -125,7 +125,7 @@
                     </execution>
                     <execution>
                         <id>drop-db-if-any</id>
-                        <phase>install</phase>
+                        <!--<phase>install</phase>-->
                         <goals>
                             <goal>execute</goal>
                         </goals>
@@ -140,7 +140,7 @@
                     </execution>
                     <execution>
                         <id>create-db</id>
-                        <phase>install</phase>
+                        <!--<phase>install</phase>-->
                         <goals>
                             <goal>execute</goal>
                         </goals>
@@ -154,7 +154,7 @@
 
                     <execution>
                         <id>create-schema</id>
-                        <phase>install</phase>
+                        <!--<phase>install</phase>-->
                         <goals>
                             <goal>execute</goal>
                         </goals>
@@ -171,7 +171,7 @@
                     </execution>
                     <execution>
                         <id>master-data</id>
-                        <phase>install</phase>
+                        <!--<phase>install</phase>-->
                         <goals>
                             <goal>execute</goal>
                         </goals>

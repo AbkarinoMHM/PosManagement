@@ -13,7 +13,7 @@
                     <input id="id" ng-model="currentRecord.id" disabled>
                 </md-input-container>
                 <md-input-container class="md-block" flex-gt-sm>
-                    <label>Branch Name *</label>
+                    <label>Branch Name</label>
                     <input type="text" name="name" ng-model="currentRecord.name" required>
                     <div ng-messages="addForm.name.$error">
                         <div ng-message="required">
@@ -40,7 +40,7 @@
                                      md-items="item in getRegions(ctrl.regionSearchText)"
                                      md-item-text="item.name"
                                      md-require-match
-                                     md-floating-label="Region *">
+                                     md-floating-label="Region">
                         <md-item-template>
                             <span md-highlight-text="regionSearchText">{{item.name}}</span>
                         </md-item-template>
@@ -62,7 +62,7 @@
                                      md-items="item in getAreas(ctrl.areaSearchText)"
                                      md-item-text="item.name"
                                      md-require-match
-                                     md-floating-label="Area *">
+                                     md-floating-label="Area">
                         <md-item-template>
                             <span md-highlight-text="areaSearchText">{{item.name}}</span>
                         </md-item-template>
