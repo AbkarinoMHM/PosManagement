@@ -572,27 +572,27 @@ TABLESPACE pg_default;
 /****************************************************************/
 
 /************************Security ********************************/
-CREATE TABLE public.role
+CREATE TABLE public.policy
 (
-    role_id integer NOT NULL,
-    role_name character varying NOT NULL,
-    CONSTRAINT roles_pkey PRIMARY KEY (role_id)
+    policy_id integer NOT NULL,
+    policy_name character varying NOT NULL,
+    CONSTRAINT policy_pkey PRIMARY KEY (policy_id)
 )
 WITH (
     OIDS = FALSE
 )
 TABLESPACE pg_default;
 
-CREATE TABLE public.user_role
+CREATE TABLE public.user_policy
 (
-    user_role_user_id integer NOT NULL,
-    user_role_role_id integer NOT NULL,
-    CONSTRAINT user_role_pkey PRIMARY KEY (user_role_role_id, user_role_user_id),
-    CONSTRAINT user_role_role_id FOREIGN KEY (user_role_role_id)
-        REFERENCES public.role (role_id) MATCH SIMPLE
+    user_policy_user_id integer NOT NULL,
+    user_policy_policy_id integer NOT NULL,
+    CONSTRAINT user_policy_pkey PRIMARY KEY (user_policy_policy_id, user_policy_user_id),
+    CONSTRAINT user_policy_policy_id FOREIGN KEY (user_policy_policy_id)
+        REFERENCES public.policy (policy_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT user_role_user_id_fkey FOREIGN KEY (user_role_user_id)
+    CONSTRAINT user_policy_user_id_fkey FOREIGN KEY (user_policy_user_id)
         REFERENCES public."user" (user_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
