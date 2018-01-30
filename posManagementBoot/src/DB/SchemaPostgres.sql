@@ -332,7 +332,7 @@ CREATE TABLE `operatorpos_status` (
 
 /*************************** POS ********************************/
 
-CREATE TABLE public.simvendor
+CREATE TABLE public.sim_vendor
 (
     sim_vendor_id integer NOT NULL DEFAULT nextval('simvendor_sim_vendor_id_seq'::regclass),
     sim_vendor_name character varying(50)  NOT NULL,
@@ -346,7 +346,7 @@ TABLESPACE pg_default;
 
 CREATE TABLE public.sim
 (
-    sim_id integer NOT NULL DEFAULT nextval('sim_sim_id_seq'::regclass),
+    sim_id bigint NOT NULL DEFAULT nextval('sim_sim_id_seq'::regclass),
     sim_number character varying(50)  NOT NULL,
     sim_vendor_id integer NOT NULL,
     vendor_branch_id bigint NOT NULL,

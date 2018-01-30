@@ -1,5 +1,7 @@
 package com.ebe.entities;
 
+import lombok.*;
+
 import javax.persistence.*;
 
 /**
@@ -7,76 +9,26 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "sim")
+@NoArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode
 public class SimEntity {
-    private Long simId;
-    private String simNumber;
-    private Integer simVendorId;
-    private Long ebeBranchId;
-    private Byte isDamage;
-
     @Id
-    @Column(name = "SimID", nullable = false)
-    public Long getSimId() {
-        return simId;
-    }
+    @Column(name = "sim_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sim_seq")
+    @SequenceGenerator(name = "sim_seq", sequenceName = "sim_sim_id_seq", allocationSize = 1)
+    private Long simId;
 
-    public void setSimId(Long simId) {
-        this.simId = simId;
-    }
+    @Column(name = "sim_number", nullable = false, length = 50)
+    private String simNumber;
 
-    @Basic
-    @Column(name = "SimNumber", nullable = false, length = 50)
-    public String getSimNumber() {
-        return simNumber;
-    }
+    @Column(name = "sim_vendor_id", nullable = false)
+    private Integer simVendorId;
 
-    public void setSimNumber(String simNumber) {
-        this.simNumber = simNumber;
-    }
+    @Column(name = "vendor_branch_id", nullable = true)
+    private Long vendorBranchId;
 
-    @Basic
-    @Column(name = "SimVendorID", nullable = false)
-    public Integer getSimVendorId() {
-        return simVendorId;
-    }
-
-    public void setSimVendorId(Integer simVendorId) {
-        this.simVendorId = simVendorId;
-    }
-
-    @Basic
-    @Column(name = "EbeBranchID", nullable = true)
-    public Long getEbeBranchId() {
-        return ebeBranchId;
-    }
-
-    public void setEbeBranchId(Long ebeBranchId) {
-        this.ebeBranchId = ebeBranchId;
-    }
-
-    @Basic
-    @Column(name = "IsDamage", nullable = true)
-    public Byte getIsDamage() {
-        return isDamage;
-    }
-
-    public void setIsDamage(Byte isDamage) {
-        this.isDamage = isDamage;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        SimEntity simEntity = (SimEntity) o;
-
-        if (simId != simEntity.simId) return false;
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-              return this.simId.hashCode();
-    }
+    @Column(name = "sim_is_damage", nullable = true)
+    private Byte isDamage;
 }
